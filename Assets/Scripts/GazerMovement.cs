@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GazerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float speed = 3.65f;
     [SerializeField] private float topY = 3f;
     [SerializeField] private float bottomY = -3f;
     [SerializeField] private float fixedX = 2f;
