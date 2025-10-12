@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine;
 
 
@@ -23,7 +22,12 @@ public class PlayerMovement : MonoBehaviour
 
     void ProcessInput()
     {
-        // Movimiento
+        ProcessMovementInput();
+        ProcessColorChangeInput(); // lo de cambiar el color del avatar con espacio
+    }
+
+    void ProcessMovementInput()
+    {
         float x = 0f;
         float y = 0f;
 
@@ -32,9 +36,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) x = -2f;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) x = 2f;
 
+        // actualizar el vector interno de direccion del movimiento (no es el transform del jugador!!)
         moveVector = new Vector2(x, y).normalized;
+    }
 
-        // Cambiar color del avatar con espacio
+    void ProcessColorChangeInput()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             sr.color = new Color(Random.value, Random.value, Random.value);

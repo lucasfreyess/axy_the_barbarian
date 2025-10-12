@@ -18,27 +18,28 @@ public class GazerMovement : MonoBehaviour
 
     void Update()
     {
-        // Gazer no tiene input, solo se mueve
+        ProcessActions(); // procesa las acciones del Gazer (por ahora solo se mueve)
         UpdateState();
+    }
+
+    void ProcessActions()
+    {
+        ProcessMovement();
+    }
+
+    void ProcessMovement()
+    {
+        // si el gazer se esta moviendo hacia arriba y llego al tope superior
+        if (isGazerMovingUp && transform.position.y >= topY) isGazerMovingUp = false;
+
+        // si el gazer se esta moviendo hacia abajo y llego al tope inferior
+        else if (!isGazerMovingUp && transform.position.y <= bottomY) isGazerMovingUp = true;
     }
 
     void UpdateState()
     {
-        if (isGazerMovingUp)
-        {
-            transform.Translate(speed * Time.deltaTime * Vector2.up);   // se mueve hacia arriba
-
-            // si llego al tope superior
-            if (transform.position.y >= topY)
-                isGazerMovingUp = false;
-        }
-        else
-        {
-            transform.Translate(speed * Time.deltaTime * Vector2.down); // se mueve hacia abajo
-
-            // si llego al tope inferior
-            if (transform.position.y <= bottomY)
-                isGazerMovingUp = true;
-        }
+        // se actualiza el movimiento segun el booleano de direccion del gazer
+        Vector2 moveDirection = isGazerMovingUp ? Vector2.up : Vector2.down;
+        transform.Translate(speed * Time.deltaTime * moveDirection);
     }
 }
