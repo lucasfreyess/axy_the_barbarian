@@ -20,13 +20,19 @@ public class SkeletonArcher : MonoBehaviour
 
     void Update()
     {
+        ProcessActions(); // procesa las acciones del esqueleto (por ahora solo dispara flechas xd)
         UpdateState();
     }
 
-    void UpdateState()
+    void ProcessActions()
     {
-        shootIntervalTimer += Time.deltaTime;
-        if (shootIntervalTimer >= shootInterval) // cuando el timer llega a 1 segundo, se dispara una flecha
+        ProcessArrowShooting();
+    }
+
+    void ProcessArrowShooting()
+    {
+        // cuando el timer llega a 1 segundo, se dispara una flecha
+        if (shootIntervalTimer >= shootInterval)
         {
             Debug.Log("Timer excedio el intervalo!");
             ShootArrow();
@@ -43,7 +49,12 @@ public class SkeletonArcher : MonoBehaviour
         float arrowPositionX = Random.Range(transform.position.x - arrowAreaRadius, transform.position.x + arrowAreaRadius);
 
         currentArrow = Instantiate(arrowPrefab, new Vector2(arrowPositionX, arrowPositionY), Quaternion.identity);
-
         Debug.Log("Flecha creada en: " + currentArrow.transform.position);
+    }
+
+    void UpdateState()
+    {
+        // el unico estado interno (que se modifica actualmente) del esqueleto es el timer para disparar flechas!!
+        shootIntervalTimer += Time.deltaTime;
     }
 }
