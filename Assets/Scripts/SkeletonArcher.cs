@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class SkeletonArcher : MonoBehaviour
 {
     [SerializeField] private GameObject arrowPrefab;     // prefab para instanciar la flecha 
@@ -11,7 +12,6 @@ public class SkeletonArcher : MonoBehaviour
     private float shootIntervalTimer = 0f;
     private GameObject currentArrow;                     // para poder destruirla cuando se spawnee otra jejjeje
 
-    
     void Start()
     {
         // SkeletonArcher empieza en (8,0) y no se mueve
