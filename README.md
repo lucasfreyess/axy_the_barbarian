@@ -12,33 +12,16 @@ Hola profe! Somos el grupo 3 de Intro. al Desarrollo de Videojuegos 202520.
 
 ## Entregas
 
-### Entrega 1
+### Entrega 3
 
-* La escena del juego se encuentra en *Assets/Scenes/SampleScene.unity*.
+Lo siguiente sirve para responder posibles dudas que puedan ocurrir a lo largo de la corrección de esta entrega:
 
-Los siguientes incisos sirven a modo de resolver posibles dudas que pueden surgir en el proceso de corrección:
+* El StateController se encuentra implementado para los GameObjects, aunque no le dimos dicho nombre:
 
-#### Parte 1
+    * Si entendimos bien su propósito (ya que no se encuentra descrito en [la pagina maestra oficial del Component Pattern](https://gameprogrammingpatterns.com/component.html)), entonces componentes que heredan de *MovementComponent* y *PhysicsComponent* hacen la misma pega; actualizan el estado de las entidades (jugador y enemigos), que frecuentemente es solo movimiento.
 
-* ¡Se puede cambiar el color del ***personaje*** (cuadradito blanco) con la barra espaciadora!
-* El script que controla al personaje está en *Assets/Scripts/PlayerMovement.cs*
+        * Sin embargo, en el caso del Esqueleto, el unico updateo de "estado' que experimenta es el aumento de su timer interno del intervalo de tiempo necesario para generar otra flecha. Aunque entendemos que esto no es estrictamente estado, sentimos necesario declararlo.
 
-#### Parte 2
+* Aunque gran parte de los componentes de *GameEntity* no son usados por todas las entidades (como el Audio, Physics y Graphics Component), sentimos necesario dejar el GameEntity de esta manera, ya que no existe documento oficial (que pudieramos encontrar, por lo menos) donde la entidad base tenga solo el MovementComponent, por ejemplo.
 
-* El sprite del ***Gazer*** es un cuadrado de color rojo.
-* El script del Gazer se encuentra en *Assets/Scripts/GazerMovement.cs*
-
-#### Parte 3
-
-* El sprite del ***Drunk-Skeleton-Archer Hiper-Mega 3000*** es un cuadrado de color negro.
-    * Las flechas que spawnea el Esqueleto son triangulares y amarillas.
-
-* El script del Arquero-Esqueleto se encuentra en *Assets/Scripts/PlayerMovement.cs*
-
-* Aunque tenemos claro que el Gazer no debería hacer daño al jugador en esta entrega, no estamos seguros de si las flechas del arquero deben hacerlo.
-
-    * Dado que el propósito de esta entrega es de implementar el ***Game Loop Pattern*** con tal de *decouple-ear* el procesamiento de inputs y la actualización de estados cada frame, entonces pensamos que lo más probable es que no fuera necesario que el arquero hiciera daño, ya que esto escaparía un poco el propósito mencionado.
-
-* A veces, la flecha se instanciará dentro del sprite del Arquero xddd; por ahora, no debería ser mucho problema, pero en el futuro tenemos pensado que aparezca más allá de dicho sprite, o por lo menos que aparezca en un layer más arriba de donde se encuentra el Arquero.
-
-* Quizás más trivialmente, el intervalo de spawneo de las flechas es diferente a la velocidad del Gazer (1 segundo vs. 3.65 segundos).
+    * Aun asi, entendemos que parte de la gracia es dejar a la entidad base con lo minimamente necesario para que los que heredan de este funcionen, pero tambien imaginamos que la gracia es que se puedan extender facilmente los enemigos en un posible futuro (e.g., que el Gazer y Esqueleto tengan graficas, audio, etc) sin tener que modificar a Player.
