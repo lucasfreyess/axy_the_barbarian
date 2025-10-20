@@ -11,7 +11,12 @@ public class PlayerAudioComponent : AudioComponent
         #if UNITY_EDITOR
         EditorApplication.Beep(); // sonido en el editor
         #endif
-        
+
+        PlaySound();
+    }
+    
+    private void PlaySound()
+    {
         if (audioSource != null) audioSource.Play();
     }
 }

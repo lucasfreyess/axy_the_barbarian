@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Wall
+  - Exit
+  - Arrow
+  - Text (UI)
   layers:
   - Default
   - TransparentFX

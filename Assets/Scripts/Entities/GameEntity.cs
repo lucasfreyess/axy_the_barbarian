@@ -11,13 +11,13 @@ public class GameEntity : MonoBehaviour
     [SerializeField] protected GraphicsComponent graphics_;
     [SerializeField] protected AudioComponent audio_;
 
-    [Header("Propiedades")] // no me gusta que sean public pero por ahora bastara!
+    [Header("Propiedades")] // no me gusta que sean public pero sino no se pueden acceder desde Componentes!
     public float startingX = 0;
     public float startingY = 0;
-    //[SerializeField] protected float speed;
 
     protected virtual void Start()
     {
+        // componentes son asignados en el editor, por lo que no es necesario asignarlos aqui
         //Debug.Log("GameEntity: componentes: " + input_ + ", " + movement_ + ", " + physics_ + ", " + graphics_);
     }
 

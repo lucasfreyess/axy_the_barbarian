@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 
 public class PlayerController : GameEntity
-{
+{    
     private Vector2 moveDirection = Vector2.zero; // vector de direccion de movimiento del jugador
 
     protected override void Start()

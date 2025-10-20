@@ -4,7 +4,7 @@ using UnityEngine;
 public class SkeletonShootingComponent : MonoBehaviour
 {
     [SerializeField] private GameObject arrowPrefab;     // prefab para instanciar la flecha
-    [SerializeField] private float arrowAreaRadius = 3f; // area alrededor del esqueleto donde puede aparecer la flecha
+    [SerializeField] private float arrowAreaRadius = 5f; // area alrededor del esqueleto donde puede aparecer la flecha
     private GameObject currentArrow;                     // para poder destruirla cuando se spawnee otra jejjeje
 
     public void ShootArrow()
