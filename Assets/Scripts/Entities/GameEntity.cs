@@ -1,0 +1,36 @@
+using UnityEngine;
+
+
+//usado para representar al player y todos los enemigos!!
+public class GameEntity : MonoBehaviour
+{
+    [Header("Componentes")]
+    [SerializeField] protected InputComponent input_;
+    [SerializeField] protected MovementComponent movement_;
+    [SerializeField] protected PhysicsComponent physics_;
+    [SerializeField] protected GraphicsComponent graphics_;
+    [SerializeField] protected AudioComponent audio_;
+    // futuro: agregar soundcomponent
+
+    [Header("Propiedades")] // no me gusta que sean public pero por ahora bastara!
+    public float startingX = 0;
+    public float startingY = 0;
+    //[SerializeField] protected float speed;
+
+    protected virtual void Start()
+    {
+        //Debug.Log("GameEntity: componentes: " + input_ + ", " + movement_ + ", " + physics_ + ", " + graphics_);
+    }
+
+    protected virtual void Update()
+    {
+        if (input_ != null) input_.ProcessInput();
+        if (movement_ != null) movement_.UpdateState();
+        if (graphics_ != null) graphics_.UpdateGraphics();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (physics_ != null) physics_.FixedUpdateState();
+    }
+}
