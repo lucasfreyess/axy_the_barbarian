@@ -1780,8 +1780,10 @@ GameObject:
   - component: {fileID: 1830850465}
   - component: {fileID: 1830850464}
   - component: {fileID: 1830850463}
-  - component: {fileID: 1830850466}
   - component: {fileID: 1830850467}
+  - component: {fileID: 1830850466}
+  - component: {fileID: 1830850469}
+  - component: {fileID: 1830850468}
   m_Layer: 0
   m_Name: GazerEnemy
   m_TagString: Enemy
@@ -1883,10 +1885,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8056ffc1cc04894da3e24462fd650a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.65
-  topY: 3
-  bottomY: -3
-  fixedX: 2
+  input_: {fileID: 1830850469}
+  movement_: {fileID: 1830850468}
+  physics_: {fileID: 0}
+  graphics_: {fileID: 0}
+  audio_: {fileID: 0}
+  startingX: 2
+  startingY: 3
 --- !u!61 &1830850467
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1933,6 +1938,34 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1830850468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830850462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21ebdc394ceca2346b17edf451d36ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gazer: {fileID: 1830850466}
+  speed: 3.65
+--- !u!114 &1830850469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830850462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9462939ccc99b418756cf4346bfb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gazer: {fileID: 1830850466}
+  bottomY: -3
 --- !u!1 &1869202811
 GameObject:
   m_ObjectHideFlags: 0

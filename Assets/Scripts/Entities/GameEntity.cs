@@ -10,7 +10,6 @@ public class GameEntity : MonoBehaviour
     [SerializeField] protected PhysicsComponent physics_;
     [SerializeField] protected GraphicsComponent graphics_;
     [SerializeField] protected AudioComponent audio_;
-    // futuro: agregar soundcomponent
 
     [Header("Propiedades")] // no me gusta que sean public pero por ahora bastara!
     public float startingX = 0;
