@@ -878,8 +878,11 @@ GameObject:
   - component: {fileID: 1436785979}
   - component: {fileID: 1436785978}
   - component: {fileID: 1436785977}
-  - component: {fileID: 1436785980}
   - component: {fileID: 1436785981}
+  - component: {fileID: 1436785980}
+  - component: {fileID: 1436785984}
+  - component: {fileID: 1436785983}
+  - component: {fileID: 1436785982}
   m_Layer: 0
   m_Name: SkeletonArcherEnemy
   m_TagString: Enemy
@@ -978,14 +981,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1436785976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ac1b59ecacc63458b09f9ef1d4693c, type: 3}
+  m_Script: {fileID: 11500000, guid: f698dcac6c767034786e3052437bb4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 7460438627956868959, guid: 2927b25802ec3074abbbf74a6b589eca, type: 3}
-  StartingX: 8
-  StartingY: 0
-  shootInterval: 1
-  arrowAreaRadius: 3
+  input_: {fileID: 0}
+  movement_: {fileID: 1436785984}
+  physics_: {fileID: 0}
+  graphics_: {fileID: 0}
+  audio_: {fileID: 0}
+  startingX: 8
+  startingY: 0
+  shooting: {fileID: 1436785983}
+  timing: {fileID: 1436785982}
 --- !u!61 &1436785981
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1032,6 +1039,46 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1436785982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436785976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c22ab3765f4214c900f1b86560637e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootInterval: 1
+--- !u!114 &1436785983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436785976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e32aaaaa003c4459bd5f003ca7c58d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 7460438627956868959, guid: 2927b25802ec3074abbbf74a6b589eca, type: 3}
+  arrowAreaRadius: 3
+--- !u!114 &1436785984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436785976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f21dbb2bd5f6b4e87ef07040a559dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeleton: {fileID: 1436785980}
 --- !u!1 &1516462044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,7 +1937,7 @@ MonoBehaviour:
   physics_: {fileID: 0}
   graphics_: {fileID: 0}
   audio_: {fileID: 0}
-  startingX: 2
+  startingX: -4
   startingY: 3
 --- !u!61 &1830850467
 BoxCollider2D:

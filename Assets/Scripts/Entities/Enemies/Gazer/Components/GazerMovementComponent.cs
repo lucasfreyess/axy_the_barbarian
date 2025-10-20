@@ -1,9 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 
+// este componente funciona como el que updatea el state, mientras que InputComponent procesa el "input" (la IA)
 public class GazerMovementComponent : MovementComponent
-{    
+{
     //[SerializeField] private float topY = 3f;   // se setea en el inspector del GazerController (startingY)
     //[SerializeField] private float fixedX = 2f; // se setea en el inspector del GazerController (startingX)
     [SerializeField] private GazerController gazer;
@@ -14,7 +14,7 @@ public class GazerMovementComponent : MovementComponent
         // Gazer empieza en (2,3), va hacia (2,-3) y se devuelve
         transform.position = new Vector2(gazer.startingX, gazer.startingY);
     }
-    
+
     public override void UpdateState()
     {
         // se actualiza el movimiento segun el booleano de direccion del gazer
