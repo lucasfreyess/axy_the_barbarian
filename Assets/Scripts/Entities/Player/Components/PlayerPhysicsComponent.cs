@@ -6,10 +6,10 @@ using UnityEngine;
 public class PlayerPhysicsComponent : PhysicsComponent
 {
     [SerializeField] private PlayerController player; // para obtener moveDirection
-    [SerializeField] private PlayerAudioComponent audioComponent; // quiero cambiar esto pq esta muy tigthly coupled pero no me da el tiempo!!
     [SerializeField] private float speed = 20f;
 
-    public event Action OnGameWon;
+    public event Action OnCollission;  //para que el soundcomponent pueda reproducir sonido!
+    public event Action OnGameWon;     //para imprimir texto de victoria/derrota en UI/TextWriter.cs
     public event Action OnGameLost;
 
     private bool canPlayerMove = true;
@@ -28,7 +28,7 @@ public class PlayerPhysicsComponent : PhysicsComponent
 
         if (collidedObjectTag == "Wall" || collidedObjectTag == "Exit" || collidedObjectTag == "Enemy" || collidedObjectTag == "Arrow")
         {
-            if (audioComponent != null) audioComponent.PlayBeepSound();
+            OnCollission?.Invoke();
         }
         if (collidedObjectTag == "Exit" || collidedObjectTag == "Enemy" || collidedObjectTag == "Arrow")
         {

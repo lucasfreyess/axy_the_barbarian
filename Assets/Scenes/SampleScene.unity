@@ -1720,7 +1720,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1787470038}
   player: {fileID: 1787470040}
-  audioComponent: {fileID: 1787470045}
   speed: 20
 --- !u!114 &1787470042
 MonoBehaviour:
@@ -1774,6 +1773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1787470046}
+  physics: {fileID: 1787470041}
 --- !u!82 &1787470046
 AudioSource:
   m_ObjectHideFlags: 0

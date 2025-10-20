@@ -11,7 +11,7 @@ public class GameEntity : MonoBehaviour
     [SerializeField] protected GraphicsComponent graphics_;
     [SerializeField] protected AudioComponent audio_;
 
-    [Header("Propiedades")] // no me gusta que sean public pero sino no se pueden acceder desde Componentes!
+    [Header("Propiedades")] // no me gusta que sean public pero sino no se pueden acceder desde componentes que heredan!
     public float startingX = 0;
     public float startingY = 0;
 
