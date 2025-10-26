@@ -30,42 +30,30 @@ public class LevelLoader : MonoBehaviour
             return;
         }
 
-        // Se lee el JSON
+        // Se lee el JSON con las estructuras del LevelData.cs
         LevelData level = JsonUtility.FromJson<LevelData>(jsonFile.text);
 
         // Walls
         foreach (var w in level.wall)
         {
-            GameObject wallObj = Instantiate(wallPrefab, new Vector2(w.posX, w.posY), Quaternion.Euler(0, 0, w.rotation));
-            Vector3 scale = wallObj.transform.localScale;
-            scale.x = WALL_X_SIZE;
-            scale.y = WALL_Y_SIZE * w.scaleY;
-            wallObj.transform.localScale = scale;
+            GameObjectFactory.CreateWall(wallPrefab, w.posX, w.posY, w.rotation, w.scaleY);
         }
 
         // Enemigos
         foreach (var enemy in level.enemies)
         {
-            GameObject enemyPrefab = null;
-            if (enemy.type == "GazerEnemy") enemyPrefab = gazerEnemyPrefab;
-            else if (enemy.type == "SkeletonArcherEnemy") enemyPrefab = skeletonArcherPrefab;
+            GameObject prefab = null;
+            if (enemy.type == "GazerEnemy") prefab = gazerEnemyPrefab;
+            else if (enemy.type == "SkeletonArcherEnemy") prefab = skeletonArcherPrefab;
 
-            if (enemyPrefab != null)
+            if (prefab != null)
             {
-                GameObject enemyObj = Instantiate(enemyPrefab);
-                var entity = enemyObj.GetComponent<GameEntity>();
-                entity.startingX = enemy.startingX;
-                entity.startingY = enemy.startingY;
-                enemyObj.transform.position = new Vector2(entity.startingX, entity.startingY);
+                GameObjectFactory.CreateEnemy(prefab, enemy.startingX, enemy.startingY);
             }
         }
 
         // EndWall
         var exit = level.endWall;
-        GameObject exitObj = Instantiate(endWallPrefab, new Vector2(exit.posX, exit.posY), Quaternion.Euler(0, 0, exit.rotation));
-        Vector3 exitScale = exitObj.transform.localScale;
-        exitScale.x = WALL_X_SIZE;
-        exitScale.y = WALL_Y_SIZE * exit.scaleY;
-        exitObj.transform.localScale = exitScale;
-    }
+        GameObjectFactory.CreateEndWall(endWallPrefab, exit.posX, exit.posY, exit.rotation, exit.scaleY);
+        }
 }
