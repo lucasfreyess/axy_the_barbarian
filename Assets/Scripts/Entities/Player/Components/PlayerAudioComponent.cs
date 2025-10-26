@@ -10,7 +10,7 @@ public class PlayerAudioComponent : AudioComponent
 
     public override void Start()
     {
-        physics.OnCollision += PlayBeepSound; // me obsesione con suscribir metodos a eventos, perdon
+        GlobalListener.Instance.OnPlayerCollisionGlobal += PlayBeepSound;
     }
 
     private void PlayBeepSound()
