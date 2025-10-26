@@ -13,17 +13,12 @@ public class PlayerAudioComponent : AudioComponent
         physics.OnCollission += PlayBeepSound; // me obsesione con suscribir metodos a eventos, perdon
     }
 
-    public void PlayBeepSound()
+    private void PlayBeepSound()
     {
         #if UNITY_EDITOR
         EditorApplication.Beep(); // sonido en el editor
         #endif
 
         PlaySound();
-    }
-    
-    private void PlaySound()
-    {
-        if (audioSource != null) audioSource.Play();
     }
 }

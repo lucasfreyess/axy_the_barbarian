@@ -28,7 +28,7 @@ public class TextWriter : MonoBehaviour
         SetNewText(text);
     }
 
-    public void SetNewText(string text)
+    private void SetNewText(string text)
     {
         Debug.Log(text);
         textMesh.text = text;
