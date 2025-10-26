@@ -1,0 +1,13 @@
+{
+  "levelName": "Level 01",
+  "wall": [
+    { "posX": -15, "posY": 0, "rotation": 0, "scaleY": 1.0 },
+    { "posX": 0, "posY": -10, "rotation": 90, "scaleY": 1.5 },
+    { "posX": 0, "posY": 10, "rotation": 90, "scaleY": 1.5 }
+  ],
+  "enemies": [
+    { "type": "GazerEnemy", "startingX": 0, "startingY": 0 },
+    { "type": "SkeletonArcherEnemy", "startingX": 5, "startingY": 0 }
+  ],
+  "endWall": { "posX": 15, "posY": 0, "rotation": 0, "scaleY": 1.0 }
+}
