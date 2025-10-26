@@ -8,7 +8,7 @@ public class PlayerPhysicsComponent : PhysicsComponent
     [SerializeField] private PlayerController player; // para obtener moveDirection
     [SerializeField] private float speed = 20f;
 
-    public event Action OnCollission;  //para que el soundcomponent pueda reproducir sonido!
+    public event Action OnCollision;  //para que el soundcomponent pueda reproducir sonido!
     public event Action OnGameWon;     //para imprimir texto de victoria/derrota en UI/TextWriter.cs
     public event Action OnGameLost;
 
@@ -28,7 +28,7 @@ public class PlayerPhysicsComponent : PhysicsComponent
 
         if (collidedObjectTag == "Wall" || collidedObjectTag == "Exit" || collidedObjectTag == "Enemy" || collidedObjectTag == "Arrow")
         {
-            OnCollission?.Invoke();
+            OnCollision?.Invoke();
         }
         if (collidedObjectTag == "Exit" || collidedObjectTag == "Enemy" || collidedObjectTag == "Arrow")
         {
