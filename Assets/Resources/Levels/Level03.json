@@ -1,0 +1,19 @@
+{
+  "levelName": "Level 03",
+  "wall": [
+    { "posX": 81, "posY": -51.5, "rotation": 0, "scaleY": 1 },
+    { "posX": 109.5, "posY": -41, "rotation": 90, "scaleY": 2 },
+    { "posX": 130, "posY": -41, "rotation": 90, "scaleY": 2 },
+
+    { "posX": 105, "posY": -61, "rotation": 90, "scaleY": 2.45 },
+    { "posX": 130, "posY": -61, "rotation": 90, "scaleY": 2 }
+
+  ],
+  "enemies": [  
+    { "type": "SkeletonArcherEnemy", "startingX": 50, "startingY": -23 },
+    { "type": "GazerEnemy", "startingX": 113, "startingY": -51 },
+    { "type": "SkeletonArcherEnemy", "startingX": 65, "startingY": -23 },
+    { "type": "SkeletonArcherEnemy", "startingX": 70, "startingY": -28 }
+  ],
+  "exitWall": { "posX": 149.6, "posY": -51, "rotation": 0, "scaleY": 1.0 }
+}

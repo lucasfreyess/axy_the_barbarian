@@ -4,7 +4,13 @@ using UnityEngine;
 public class GazerInputComponent : InputComponent
 {
     [SerializeField] private GazerController gazer;
-    [SerializeField] private float bottomY = -3f;
+    private float bottomY;
+
+    public override void Start()
+    {
+        base.Start();
+        bottomY = gazer.startingY - 6f;
+    }
 
     public override void ProcessInput()
     {

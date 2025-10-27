@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,8 +10,9 @@ public class LevelLoader : MonoBehaviour
     public GameObject skeletonArcherPrefab;
     public GameObject exitWallPrefab;
 
-    [Header("Level File")]
+    [Header("Level Stuff")]
     public string levelFileName = "Level01";
+    public bool loadAllLevels = true; // si se pone true, se loadean todos los json dentro de Assets/Resources/Levels
 
     private const float WALL_X_SIZE = 0.9412677f;
     private const float WALL_Y_SIZE = 19.27043f;
@@ -19,7 +21,39 @@ public class LevelLoader : MonoBehaviour
 
     private void Start()
     {
-        LoadLevel(levelFileName);
+        if (loadAllLevels) LoadAllLevels();
+        else LoadLevel(levelFileName);
+    }
+    
+    private void LoadAllLevels()
+    {
+        var assets = Resources.LoadAll<TextAsset>("Levels");
+        if (assets == null || assets.Length == 0)
+        {
+            Debug.LogWarning("Niveles no encontrados en Assets/Resources/Levels/");
+            return;
+        }
+
+        // añadir niveles a lista si empiezan con Level y le sigue un numero de dos digitos (e.g., 01, 11, entre otros)
+        var levelNames = new List<string>();
+        foreach (var a in assets)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(a.name, @"^Level\d{2}$"))
+                levelNames.Add(a.name);
+        }
+
+        if (levelNames.Count == 0)
+        {
+            Debug.LogWarning("Niveles no encontrados en Assets/Resources/Levels/");
+            return;
+        }
+
+        // cargar niveles
+        foreach (var name in levelNames)
+        {
+            Debug.Log("Cargando nivel: " + name);
+            LoadLevel(name);
+        }
     }
 
     private void LoadLevel(string fileName)

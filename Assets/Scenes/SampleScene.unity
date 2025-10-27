@@ -317,7 +317,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1132,7 +1132,7 @@ MonoBehaviour:
   physics_: {fileID: 1787470041}
   graphics_: {fileID: 1787470044}
   audio_: {fileID: 1787470045}
-  startingX: -8
+  startingX: -10
   startingY: 5
 --- !u!114 &1787470041
 MonoBehaviour:
@@ -1405,7 +1405,8 @@ MonoBehaviour:
   gazerEnemyPrefab: {fileID: 7028185555662988276, guid: da8f0c374a7c66a4cb39a41b1f1696c3, type: 3}
   skeletonArcherPrefab: {fileID: 1186917055923105509, guid: b966bd440ec772e4f96a7ecd41360deb, type: 3}
   exitWallPrefab: {fileID: 8607074064664320374, guid: 67e2be83c10d01743829c4566341ec8f, type: 3}
-  levelFileName: Level01
+  levelFileName: Level02
+  loadAllLevels: 1
 --- !u!4 &2056224853
 Transform:
   m_ObjectHideFlags: 0
