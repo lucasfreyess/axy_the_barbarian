@@ -1,16 +1,15 @@
 using System;
-using UnityEngine;
+
 
 // Estructuras de datos para leer el JSON
 // Para construir niveles dínamicamente
-
 [Serializable]
 public class LevelData
 {
     public string levelName;
     public WallData[] wall;
     public EnemyData[] enemies;
-    public ExitWallData endWall;
+    public ExitWallData exitWall;
 }
 
 [Serializable]

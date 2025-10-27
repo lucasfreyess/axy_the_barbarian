@@ -9,5 +9,5 @@
     { "type": "GazerEnemy", "startingX": 0, "startingY": 0 },
     { "type": "SkeletonArcherEnemy", "startingX": 5, "startingY": 0 }
   ],
-  "endWall": { "posX": 15, "posY": 0, "rotation": 0, "scaleY": 1.0 }
+  "exitWall": { "posX": 15, "posY": 0, "rotation": 0, "scaleY": 1.0 }
 }

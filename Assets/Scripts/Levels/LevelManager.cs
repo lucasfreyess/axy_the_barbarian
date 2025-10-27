@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.IO;
+
 
 public class LevelLoader : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class LevelLoader : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject gazerEnemyPrefab;
     public GameObject skeletonArcherPrefab;
-    public GameObject endWallPrefab;
+    public GameObject exitWallPrefab;
 
     [Header("Level File")]
     public string levelFileName = "Level01";
@@ -15,12 +15,14 @@ public class LevelLoader : MonoBehaviour
     private const float WALL_X_SIZE = 0.9412677f;
     private const float WALL_Y_SIZE = 19.27043f;
 
-    void Start()
+    private LevelData level;
+
+    private void Start()
     {
         LoadLevel(levelFileName);
     }
 
-    void LoadLevel(string fileName)
+    private void LoadLevel(string fileName)
     {
         // Se lee el json con el nombre del archivo desde Resources/Levels
         TextAsset jsonFile = Resources.Load<TextAsset>($"Levels/{fileName}");
@@ -31,15 +33,33 @@ public class LevelLoader : MonoBehaviour
         }
 
         // Se lee el JSON con las estructuras del LevelData.cs
-        LevelData level = JsonUtility.FromJson<LevelData>(jsonFile.text);
+        level = JsonUtility.FromJson<LevelData>(jsonFile.text);
 
-        // Walls
+        // generar todos los game objects descritos en el json
+        GenerateGameObjects();
+    }
+
+    private void GenerateGameObjects()
+    {
+        GenerateWalls();
+        GenerateEnemies();
+    }
+
+    private void GenerateWalls()
+    {
+        // walls normales
         foreach (var w in level.wall)
         {
             GameObjectFactory.CreateWall(wallPrefab, w.posX, w.posY, w.rotation, w.scaleY);
         }
 
-        // Enemigos
+        // wall exit
+        var exit = level.exitWall;
+        GameObjectFactory.CreateExitWall(exitWallPrefab, exit.posX, exit.posY, exit.rotation, exit.scaleY);
+    }
+
+    private void GenerateEnemies()
+    {
         foreach (var enemy in level.enemies)
         {
             GameObject prefab = null;
@@ -51,9 +71,6 @@ public class LevelLoader : MonoBehaviour
                 GameObjectFactory.CreateEnemy(prefab, enemy.startingX, enemy.startingY);
             }
         }
-
-        // EndWall
-        var exit = level.endWall;
-        GameObjectFactory.CreateEndWall(endWallPrefab, exit.posX, exit.posY, exit.rotation, exit.scaleY);
-        }
+    }
+    
 }

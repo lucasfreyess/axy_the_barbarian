@@ -1132,7 +1132,7 @@ MonoBehaviour:
   physics_: {fileID: 1787470041}
   graphics_: {fileID: 1787470044}
   audio_: {fileID: 1787470045}
-  startingX: -7
+  startingX: -8
   startingY: 5
 --- !u!114 &1787470041
 MonoBehaviour:
@@ -1404,7 +1404,7 @@ MonoBehaviour:
   wallPrefab: {fileID: 8207452345557991987, guid: 0669b0a08280b0c48a40d5aaaf728687, type: 3}
   gazerEnemyPrefab: {fileID: 7028185555662988276, guid: da8f0c374a7c66a4cb39a41b1f1696c3, type: 3}
   skeletonArcherPrefab: {fileID: 1186917055923105509, guid: b966bd440ec772e4f96a7ecd41360deb, type: 3}
-  endWallPrefab: {fileID: 8607074064664320374, guid: 67e2be83c10d01743829c4566341ec8f, type: 3}
+  exitWallPrefab: {fileID: 8607074064664320374, guid: 67e2be83c10d01743829c4566341ec8f, type: 3}
   levelFileName: Level01
 --- !u!4 &2056224853
 Transform:

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public static class GameObjectFactory
 {
     private const float WALL_X_SIZE = 0.9412677f;
@@ -21,6 +22,7 @@ public static class GameObjectFactory
     {
         GameObject enemy = Object.Instantiate(prefab);
         var entity = enemy.GetComponent<GameEntity>();
+        
         if (entity != null)
         {
             entity.startingX = startingX;
@@ -30,8 +32,8 @@ public static class GameObjectFactory
         return enemy;
     }
 
-    // Crear EndWall
-    public static GameObject CreateEndWall(GameObject prefab, float x, float y, float rotation, float scaleY)
+    // Crear ExitWall
+    public static GameObject CreateExitWall(GameObject prefab, float x, float y, float rotation, float scaleY)
     {
         GameObject wall = Object.Instantiate(prefab, new Vector2(x, y), Quaternion.Euler(0, 0, rotation));
         Vector3 scale = wall.transform.localScale;
