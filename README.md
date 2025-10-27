@@ -16,6 +16,12 @@ Hola profe! Somos el grupo 3 de Intro. al Desarrollo de Videojuegos 202520.
 
 Lo siguiente sirve a modo de solucionar **posibles dudas** que puedan surgir al momento de la corrección.
 
+* Ya que el jugador es medio chico, decidimos que la camara lo siga en todo momento, por lo que no se puede ver todas las rooms con la camara en un momento dado.
+
+    * Sin embargo, si se cambia la *view* del juego a la *scene* mientras se juega, entonces se puede ver a todas las rooms al mismo tiempo. 
+
+    * Más aún, se puede sacar la Main Camera al root de la jerarquía de la escena (ya que actualmente es "hijo" del Game Object del jugador) y decrecerle el zoom para poder ver todo el nivel al mismo tiempo, pero no lo recomendamos pq es medio incomodo xd
+
 * Dado como se hizo la clase base de entidades (*Assets/Scripts/Entitites/GameEntity.cs*) en la entrega pasada, entonces todas las entidades (jugador, gazer y esqueleto) tienen posiciones iniciales modificables desde el editor (*StartingX* y *StartingY*)
 
 * Dadas previas implementaciones, el gazer ya se movia a *speed* unidades-por-segundo. Esta variable es modificable desde el inspector en el prefab del Gazer (Assets/Prefabs/GazerEnemy.prefab), en el componente de Movimiento de este.
