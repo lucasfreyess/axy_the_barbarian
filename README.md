@@ -16,6 +16,22 @@ Hola profe! Somos el grupo 3 de Intro. al Desarrollo de Videojuegos 202520.
 
 Lo siguiente sirve a modo de solucionar **posibles dudas** que puedan surgir al momento de la corrección.
 
+* Dado como se hizo la clase base de entidades (*Assets/Scripts/Entitites/GameEntity.cs*) en la entrega pasada, entonces todas las entidades (jugador, gazer y esqueleto) tienen posiciones iniciales modificables desde el editor (*StartingX* y *StartingY*)
+
+* Dadas previas implementaciones, el gazer ya se movia a *speed* unidades-por-segundo. Esta variable es modificable desde el inspector en el prefab del Gazer (Assets/Prefabs/GazerEnemy.prefab), en el componente de Movimiento de este.
+
+    * Por default, *speed* equivale a 3.65, por lo que el gazer se mueve 3.65 unidades por segundo.
+
+    * Sin embargo, no se implemento el protip de *Velocity is calculated in the controller, and movement in the Physics*, ya que (por ahora) ningún otro componente del Gazer utiliza *speed*, por lo que preferimos dejar el cálculo de velocidad dentro del componente de Movimiento del Gazer.
+
+        * Cabe mencionar que, por la implementacion anterior, Gazer no tiene un Physics Component, ya que en estricto rigor no tiene fisicas! aunque si tiene colisiones! Dado esto, si tiene un MovementComponent
+
+* El esqueleto tiene tanto el área de disparo de sus flechas, como el intervalo de tiempo entre disparos, disponibles para editar en el inspector de su prefab (Assets/Prefabs/SkeletonArcherEnemy.prefab)!
+
+    * El *arrowAreaRadius* se puede modificar en la vista del componente de Shooting del esqueleto, dentro del inspector del prefab de este último.
+
+    * De manera similar, el *shootInterval* entre cada flecha se puede modificar en el componente de Timing de este.
+
 * La creación de *Game Objects* a partir de archivos .json se encuentra en *Assets/Scripts/Levels/LevelManager.cs*
 
     * Se encuentra como componente en el objeto *LevelLoader* en la jerarquía de la escena.
