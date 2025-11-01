@@ -1,4 +1,3 @@
-using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -6,8 +5,6 @@ using UnityEditor;
 
 public class PlayerAudioComponent : AudioComponent
 {
-    [SerializeField] private PlayerPhysicsComponent physics;
-
     public override void Start()
     {
         GlobalListener.Instance.OnPlayerCollisionGlobal += PlayBeepSound;

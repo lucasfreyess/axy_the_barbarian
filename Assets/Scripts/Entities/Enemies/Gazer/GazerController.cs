@@ -1,6 +1,3 @@
-using UnityEngine;
-
-
 public class GazerController : GameEntity
 {
     private bool isGazerMovingUp = false;

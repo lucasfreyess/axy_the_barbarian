@@ -14,8 +14,8 @@ public class LevelLoader : MonoBehaviour
     public string levelFileName = "Level01";
     public bool loadAllLevels = true; // si se pone true, se loadean todos los json dentro de Assets/Resources/Levels
 
-    private const float WALL_X_SIZE = 0.9412677f;
-    private const float WALL_Y_SIZE = 19.27043f;
+    //private const float WALL_X_SIZE = 0.9412677f;
+    //private const float WALL_Y_SIZE = 19.27043f;
 
     private LevelData level;
 
