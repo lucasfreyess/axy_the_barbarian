@@ -10,20 +10,15 @@ public class PlayerAudioComponent : AudioComponent
 
     public override void Start()
     {
-        physics.OnCollission += PlayBeepSound; // me obsesione con suscribir metodos a eventos, perdon
+        GlobalListener.Instance.OnPlayerCollisionGlobal += PlayBeepSound;
     }
 
-    public void PlayBeepSound()
+    private void PlayBeepSound()
     {
         #if UNITY_EDITOR
         EditorApplication.Beep(); // sonido en el editor
         #endif
 
         PlaySound();
-    }
-    
-    private void PlaySound()
-    {
-        if (audioSource != null) audioSource.Play();
     }
 }

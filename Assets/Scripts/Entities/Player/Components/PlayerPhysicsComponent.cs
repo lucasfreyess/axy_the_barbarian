@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 
@@ -7,10 +6,6 @@ public class PlayerPhysicsComponent : PhysicsComponent
 {
     [SerializeField] private PlayerController player; // para obtener moveDirection
     [SerializeField] private float speed = 20f;
-
-    public event Action OnCollission;  //para que el soundcomponent pueda reproducir sonido!
-    public event Action OnGameWon;     //para imprimir texto de victoria/derrota en UI/TextWriter.cs
-    public event Action OnGameLost;
 
     private bool canPlayerMove = true;
     
@@ -28,14 +23,14 @@ public class PlayerPhysicsComponent : PhysicsComponent
 
         if (collidedObjectTag == "Wall" || collidedObjectTag == "Exit" || collidedObjectTag == "Enemy" || collidedObjectTag == "Arrow")
         {
-            OnCollission?.Invoke();
+            GlobalListener.Instance.NotifyPlayerCollision();
         }
         if (collidedObjectTag == "Exit" || collidedObjectTag == "Enemy" || collidedObjectTag == "Arrow")
         {
             canPlayerMove = false;
 
-            if (collidedObjectTag == "Exit") OnGameWon?.Invoke(); // jugador gana!
-            else OnGameLost?.Invoke(); // jugador muere!
+            if (collidedObjectTag == "Exit") GlobalListener.Instance.NotifyGameWon(); // jugador gana!
+            else GlobalListener.Instance.NotifyGameLost(); // jugador muere!
         }
     }
 }

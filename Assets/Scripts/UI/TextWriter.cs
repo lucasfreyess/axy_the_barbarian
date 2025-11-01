@@ -12,8 +12,8 @@ public class TextWriter : MonoBehaviour
     {
         SetNewText("Presiona 'espacio' para\ncambiar el color!");
 
-        physics.OnGameWon += GameWonText;
-        physics.OnGameLost += GameLostText;
+        GlobalListener.Instance.OnGameWonGlobal += GameWonText;
+        GlobalListener.Instance.OnGameLostGlobal += GameLostText;
     }
 
     private void GameWonText()
@@ -28,7 +28,7 @@ public class TextWriter : MonoBehaviour
         SetNewText(text);
     }
 
-    public void SetNewText(string text)
+    private void SetNewText(string text)
     {
         Debug.Log(text);
         textMesh.text = text;
