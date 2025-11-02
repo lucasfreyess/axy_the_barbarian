@@ -31,6 +31,8 @@ public class LevelLoader : MonoBehaviour
         // cargar niveles
         if (loadAllLevels) LoadAllLevels();
         else LoadLevel(levelFileName);
+
+        GlobalListener.Instance.NotifyLevelsGenerated();
     }
 
     private void InitEnemyDictionary()
