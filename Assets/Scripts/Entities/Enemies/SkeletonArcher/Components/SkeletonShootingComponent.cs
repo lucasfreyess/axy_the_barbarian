@@ -16,6 +16,6 @@ public class SkeletonShootingComponent : MonoBehaviour
         float arrowPositionX = Random.Range(transform.position.x - arrowAreaRadius, transform.position.x + arrowAreaRadius);
 
         currentArrow = Instantiate(arrowPrefab, new Vector2(arrowPositionX, arrowPositionY), Quaternion.identity);
-        Debug.Log("Flecha creada en: " + currentArrow.transform.position);
+        //Debug.Log("Flecha creada en: " + currentArrow.transform.position);
     }
 }

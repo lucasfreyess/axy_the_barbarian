@@ -954,7 +954,7 @@ GameObject:
   - component: {fileID: 1787470045}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1201,7 +1201,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1787470046}
-  physics: {fileID: 1787470041}
 --- !u!82 &1787470046
 AudioSource:
   m_ObjectHideFlags: 0
