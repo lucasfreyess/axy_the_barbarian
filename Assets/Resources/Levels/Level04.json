@@ -1,0 +1,21 @@
+{
+  "levelName": "Level 01",
+  "wall": [
+
+    { "posX": 3, "posY": -15, "rotation": 0, "scaleY": 0.43},
+    { "posX": -3, "posY": -15, "rotation": 0, "scaleY": 0.43},
+
+    { "posX": -9, "posY": -19.5, "rotation": 90, "scaleY": 0.65 },
+    { "posX": 9, "posY": -19.5, "rotation": 90, "scaleY": 0.65 },
+
+    { "posX": -15, "posY": -30, "rotation": 0, "scaleY": 1.0 },
+    
+
+    { "posX": 0, "posY": -40, "rotation": 90, "scaleY": 1.5 },
+    
+    { "posX": 15, "posY": -30, "rotation": 0, "scaleY": 1 }
+  ],
+  "enemies": [
+    { "type": "CowardRatEnemy", "startingX": 0, "startingY": -29.5 }
+  ]
+}
