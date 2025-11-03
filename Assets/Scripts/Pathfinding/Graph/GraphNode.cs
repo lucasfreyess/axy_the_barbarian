@@ -7,7 +7,7 @@ public class GraphNode
     public int X { get; }
     public int Y { get; }
 
-    // posicion en el mundo real (útil para mover al zombie)
+    // posicion en el mundo real
     public Vector3 WorldPosition { get; }
 
     public bool IsObstacle { get; set; }
@@ -18,12 +18,17 @@ public class GraphNode
     // distancia euclidiana desde este nodo hasta el nodo final
     public float HValue { get; set; }
 
-    // nodo del que vino este nodo en el camino más corto
+    // nodo del que vino este nodo en el camino mas corto
     public GraphNode CameFrom { get; set; }
 
     public float F()
     {
         return GValue + HValue;
+    }
+
+    public void PrintNode()
+    {
+        Debug.Log($"GraphNode({X}, {Y}) PosReal: {WorldPosition} Obstacle: {IsObstacle}, G: {GValue}, H: {HValue}, CameFrom: {(CameFrom != null ? $"({CameFrom.X}, {CameFrom.Y})" : "null")})");
     }
 
     // constructor
@@ -34,7 +39,6 @@ public class GraphNode
         this.WorldPosition = worldPosition;
         this.IsObstacle = false;
 
-        // init
         GValue = float.MaxValue;
         CameFrom = null;
     }

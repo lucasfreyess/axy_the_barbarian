@@ -28,7 +28,7 @@
     { "posX": 90, "posY": -31.5, "rotation": 0, "scaleY": 1 }
   ],
   "enemies": [
-    { "type": "HungryZombieEnemy", "startingX": 0, "startingY": 0 },
+    { "type": "HungryZombieEnemy", "startingX": 60, "startingY": 0 },
     { "type": "GazerEnemy", "startingX": 81, "startingY": -12 }
   ],
   "exitWall": { "posX": 90, "posY": 0, "rotation": 0, "scaleY": 0.7 }

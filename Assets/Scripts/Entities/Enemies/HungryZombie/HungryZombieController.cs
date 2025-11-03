@@ -3,12 +3,11 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class HungryZombieController : MonoBehaviour
+public class HungryZombieController : GameEntity
 {
     [Header("Pathfinding")]
-    //[SerializeField] private AStarAlgorithm aStar;
-    [SerializeField] private float moveSpeed = 1.5f;
-    [SerializeField] private float pathRecalculateRate = 0.5f; // para recalcular el camino 2 veces por segundo
+    [SerializeField] private float speed = 1.5f;
+    [SerializeField] private float pathRecalculateRate = 1f; // para recalcular el camino 1 vez por segundo
 
     [Header("Propiedades")]
     [SerializeField] private Rigidbody2D rb;
@@ -21,8 +20,10 @@ public class HungryZombieController : MonoBehaviour
     private List<GraphNode> currentPath;
     private int currentPathIndex;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         // encontrar al jugador
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null) player = playerObject.transform;
@@ -32,16 +33,14 @@ public class HungryZombieController : MonoBehaviour
         if (pathfindingObject != null)
             aStar = pathfindingObject.GetComponent<AStarAlgorithm>();
 
-        if (aStar == null)
-            Debug.LogError("HungryZombie no pudo encontrar el AStarAlgorithm!");
-        else Debug.Log("HungryZombie encontró el AStarAlgorithm, Nombre Objeto: " + aStar.gameObject.name);
+        if (aStar == null) Debug.LogError("HungryZombie no pudo encontrar el AStarAlgorithm!");
+        else Debug.Log("HungryZombie encontro el AStarAlgorithm, Nombre Objeto: " + aStar.gameObject.name);
 
-        if (player == null)
-            Debug.LogError("HungryZombie no pudo encontrar al Player!");
-        else Debug.Log("HungryZombie encontró al Player, Nombre Objeto: " + player.gameObject.name);
+        if (player == null) Debug.LogError("HungryZombie no pudo encontrar al Player!");
+        else Debug.Log("HungryZombie encontro al Player, Nombre Objeto: " + player.gameObject.name);
     }
 
-    void Update()
+    protected override void Update()
     {
         // usar un timer para calcular aStar cada pathRecalculateRate-segundos
         pathRecalculateTimer -= Time.deltaTime;
@@ -52,7 +51,7 @@ public class HungryZombieController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
         HandleMovement(); // logica de movimiento
     }
@@ -63,14 +62,26 @@ public class HungryZombieController : MonoBehaviour
 
         // calcular el camino hacia el jugador!!!
         currentPath = aStar.FindPath(transform.position, player.position);
-        
-        // empezar desde el primer nodo del camino
-            // el primer nodo (0) suele ser el mismo en el que ya se esta
-            // Apuntar al segundo nodo (1) suele dar un movimiento mas fluido
-        if (currentPath != null && currentPath.Count > 0) 
+
+        if (currentPath != null && currentPath.Count > 1) // Entonces, hay un camino con mas de 1 nodo.
+        {
+            
+            // se apunta al segundo nodo del camino (indice 1), porque el primero (indice 0) es donde ya esta el zombie.
             currentPathIndex = 1;
-        else
+            //Debug.Log($"HungryZombie obtuvo un camino con {currentPath.Count} nodos. Apuntando al indice 1.");
+        }
+        else if (currentPath != null && currentPath.Count == 1) // El camino solo tiene 1 nodo
+        {
+            // ya se esta en el nodo final, por lo que se apunta al 0 (zombie) y no se sigue moviendo.
             currentPathIndex = 0;
+            //Debug.Log("HungryZombie obtuvo camino de 1 nodo (se llego al destino).");
+        }
+        else // no se encontro un camino.
+        {
+            currentPath = new List<GraphNode>();
+            currentPathIndex = 0;
+            //Debug.Log("HungryZombie obtuvo un camino con 0 nodos.");
+        }
     }
 
     private void HandleMovement()
@@ -82,7 +93,18 @@ public class HungryZombieController : MonoBehaviour
             return;
         }
 
-        // obtener el waypoint actual al que nos dirigimos
+        // Si el camino solo tiene 1 nodo y ya se esta en el, no moverse
+        if (currentPath.Count == 1 && currentPathIndex == 0)
+        {
+            // chequear distancia porsiacaso
+            if (Vector3.Distance(transform.position, currentPath[0].WorldPosition) < 0.3f)
+            {
+                rb.linearVelocity = Vector2.zero;
+                return;
+            }
+        }
+
+        // obtener nodo n al que se dirige el zombie
         GraphNode targetNode = currentPath[currentPathIndex];
         Vector3 targetPosition = targetNode.WorldPosition;
 
@@ -91,12 +113,11 @@ public class HungryZombieController : MonoBehaviour
 
         // moverse hacia el jugador con Seek
         Vector2 direction = (targetPosition - transform.position).normalized;
-        rb.linearVelocity = direction * moveSpeed;
+        rb.linearVelocity = direction * speed;
 
-        // revisar si se llego al waypoint
-        // Si estamos lo suficientemente cerca, avanzamos al siguiente waypoint
+        // revisar si se llego al nodo n
+            // si se esta lo suficientemente cerca, se avanza al siguiente nodo
         if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
             currentPathIndex++;
-            
     }
 }

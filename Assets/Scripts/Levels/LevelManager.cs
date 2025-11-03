@@ -33,6 +33,7 @@ public class LevelLoader : MonoBehaviour
         if (loadAllLevels) LoadAllLevels();
         else LoadLevel(levelFileName);
 
+        Physics2D.SyncTransforms(); // para que las murallas con scaleY != 1 sean populadas correctamente en el grid de pathfinding
         GlobalListener.Instance.NotifyLevelsGenerated();
     }
 
@@ -84,7 +85,7 @@ public class LevelLoader : MonoBehaviour
         TextAsset jsonFile = Resources.Load<TextAsset>($"Levels/{fileName}");
         if (jsonFile == null)
         {
-            Debug.LogError("No se encontró el archivo JSON del nivel: " + fileName);
+            Debug.LogError("No se encontro el archivo JSON del nivel: " + fileName);
             return;
         }
 

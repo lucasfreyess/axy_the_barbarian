@@ -15,7 +15,7 @@ public class PathfindingGrid : MonoBehaviour
     // origen del grid (la esquina inferior izquierda)
     [SerializeField] private Vector3 gridOrigin = new(-36, -56, 0);
 
-    // para detectar qué es un obstáculo
+    // para detectar si un GameObject es un obstaculo
     [SerializeField] private LayerMask obstacleLayer;
 
     void Start()
@@ -31,9 +31,9 @@ public class PathfindingGrid : MonoBehaviour
         for (int x = 0; x < gridWidth; x++)
         {
             for (int y = 0; y < gridHeight; y++)
-            {
-                // Calcula la posición en el mundo real
-                Vector3 worldPos = gridOrigin + new Vector3(x * cellSize + cellSize / 2, y * cellSize + cellSize / 2, 0);
+            {   
+                // calculo de posicion real
+                Vector3 worldPos = gridOrigin + new Vector3(x * cellSize, y * cellSize, 0);
                 Nodes[x, y] = new GraphNode(x, y, worldPos);
             }
         }
@@ -45,8 +45,8 @@ public class PathfindingGrid : MonoBehaviour
             {
                 GraphNode node = Nodes[x, y];
 
-                // Revisar por collider de obstáculo en la pos de este nodo
-                if (Physics2D.OverlapCircle(node.WorldPosition, cellSize / 2.1f, obstacleLayer))
+                // Revisar si hay collider de obstaculo en la pos de este nodo
+                if (Physics2D.OverlapPoint(node.WorldPosition, obstacleLayer))
                 {
                     //Debug.Log($"Obstaculo en nodo ({node.X}, {node.Y}) Pos Real: {node.WorldPosition}");
                     node.IsObstacle = true;
@@ -82,17 +82,15 @@ public class PathfindingGrid : MonoBehaviour
         return null;
     }
 
-    // obtener un nodo desde una posición del mundo
+    // obtener un nodo desde una posicion del mundo
     public GraphNode GetNodeFromWorldPoint(Vector3 worldPosition)
     {
-        // convierte la pos del mundo a coordenadas de grid
-        float percentX = (worldPosition.x - gridOrigin.x) / (gridWidth * cellSize);
-        float percentY = (worldPosition.y - gridOrigin.y) / (gridHeight * cellSize);
-        percentX = Mathf.Clamp01(percentX);
-        percentY = Mathf.Clamp01(percentY);
+        // convertir la pos del mundo a coordenadas de grid
+        float localX = worldPosition.x - gridOrigin.x;
+        float localY = worldPosition.y - gridOrigin.y;
 
-        int x = Mathf.FloorToInt(gridWidth * percentX);
-        int y = Mathf.FloorToInt(gridHeight * percentY);
+        int x = Mathf.RoundToInt(localX / cellSize);
+        int y = Mathf.RoundToInt(localY / cellSize);
 
         // Clamp para evitar errores en los bordes
         x = Mathf.Clamp(x, 0, gridWidth - 1);
@@ -101,32 +99,56 @@ public class PathfindingGrid : MonoBehaviour
         return Nodes[x, y];
     }
 
-    // obtener los vecinos
-    public List<GraphNode> GetNeighbors(GraphNode node)
+    // obtener todos los vecinos, sin importar si son obstaculos.
+    public List<GraphNode> GetAllNeighbors(GraphNode node)
     {
         List<GraphNode> neighbors = new List<GraphNode>();
 
-        // revisar 8 vecinos (incluyendo diagonales)
+        // Revisa 8 vecinos
         for (int x = -1; x <= 1; x++)
         {
             for (int y = -1; y <= 1; y++)
             {
-                // ignorar nodo actual
-                if (x == 0 && y == 0) continue;
-
+                if (x == 0 && y == 0) continue; // es el nodo central, ignorar
+                    
                 int checkX = node.X + x;
                 int checkY = node.Y + y;
 
                 GraphNode neighborNode = GetNode(checkX, checkY);
-
-                // si el vecino existe y no es un obstáculo, se agrega a la lista
-                if (neighborNode != null && !neighborNode.IsObstacle)
-                {
-                    neighbors.Add(neighborNode);
-                }
+                
+                // Si el vecino existe (esta dentro del grid), se añade a la lista de neighbors
+                if (neighborNode != null) neighbors.Add(neighborNode);
             }
         }
-
         return neighbors;
+    }
+
+    // filtra GetAllNeighbors para obtener solo aquellos que no son obstaculos
+    public List<GraphNode> GetNeighbors(GraphNode node)
+    {
+        List<GraphNode> allNeighbors = GetAllNeighbors(node);
+        List<GraphNode> transitableNeighbors = new List<GraphNode>();
+
+        foreach (var neighbor in allNeighbors)
+        {
+            if (!neighbor.IsObstacle)
+                transitableNeighbors.Add(neighbor);
+        }
+        return transitableNeighbors;
+    }
+
+    // metodo para dibujar el grid en el Scene view para ver si se agarraron bien las walls!!
+    void OnDrawGizmos()
+    {
+        if (Nodes == null) return;
+        
+        foreach (GraphNode node in Nodes)
+        {
+            // se colorea rojo si es obstaculo, o blanco si es transitable
+            Gizmos.color = node.IsObstacle ? Color.red : Color.white;
+            
+            // Dibuja un pequeño cubo en la posicion de cada nodo
+            Gizmos.DrawCube(node.WorldPosition, Vector3.one * (cellSize * 0.8f));
+        }
     }
 }

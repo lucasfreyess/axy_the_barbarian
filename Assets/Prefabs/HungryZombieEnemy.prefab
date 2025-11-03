@@ -188,7 +188,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 483eb8fde370e644787006039ff61307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aStar: {fileID: 0}
+  input_: {fileID: 0}
+  movement_: {fileID: 0}
+  physics_: {fileID: 0}
+  graphics_: {fileID: 0}
+  audio_: {fileID: 0}
+  startingX: 0
+  startingY: 0
   moveSpeed: 1.5
-  pathRecalculateRate: 0.5
+  pathRecalculateRate: 1
   rb: {fileID: 7888823049846469234}

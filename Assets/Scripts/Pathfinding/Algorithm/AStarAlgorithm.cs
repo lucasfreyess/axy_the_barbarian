@@ -14,7 +14,11 @@ public class AStarAlgorithm : MonoBehaviour
     public List<GraphNode> FindPath(Vector3 startWorldPos, Vector3 endWorldPos)
     {
         int isGoalAnObstacle = InitAStar(startWorldPos, endWorldPos);
-        if (isGoalAnObstacle == 1) return null;
+        if (isGoalAnObstacle == 1)
+        {
+            Debug.Log("Goal o Start esta en/es un obstaculo!!!");
+            return null;
+        }
 
         // comienzo del algoritmo (comente los equivalentes en pseudocodigo para no perderme jejeje)
         // ==== While(TO_VISIT not empty) ====
@@ -28,7 +32,6 @@ public class AStarAlgorithm : MonoBehaviour
             if (currentNode == goalNode) return BuildPath(goalNode);
 
             // ==== Insert node s into VISITED ====
-            // (Lo ponemos aquí para que no volvamos a procesar este nodo)
             visited.Add(currentNode);
 
             // ==== For every neighbor s’ of s that is not in VISITED ====
@@ -37,41 +40,45 @@ public class AStarAlgorithm : MonoBehaviour
                 // ignorar vecino si ya esta en VISITED
                 if (visited.Contains(neighbor)) continue;
 
-                // distancia euclidiana tambien es usada para calcular G (lo cual probablemente esta mal)
-                float costToNeighbor = GetHeuristic(currentNode, neighbor);
+                float costToNeighbor = 1.0f;
                 float tentativeGScore = currentNode.GValue + costToNeighbor;
 
                 // ==== If g(s’ ) > g(s) + cost: ====
                 if (tentativeGScore < neighbor.GValue)
                 {
                     // se encontro un camino mejor hacia este vecino
-                    neighbor.CameFrom = currentNode; // s’.cameFrom = s
-                    neighbor.GValue = tentativeGScore; // g(s’) = g(s) + cost
+                    neighbor.CameFrom = currentNode;                    // s’.cameFrom = s
+                    neighbor.GValue = tentativeGScore;                  // g(s’) = g(s) + cost
                     neighbor.HValue = GetHeuristic(neighbor, goalNode); // h(s')
 
                     // ==== Insert (s’ ) in TO_VISIT ====
                     if (!toVisit.Contains(neighbor))
+                    {
+                        //Debug.Log("Vecino agregado a TO_VISIT:");
+                        //neighbor.PrintNode();
                         toVisit.Add(neighbor);
+                    }
                 }
             }
         }
 
-        // si el loop termina, TO_VISIT esto vacio y no se encontro el goalNode
+        // si el loop termina, TO_VISIT esta vacio y no se encontro el goalNode
         return null;
     }
 
     private int InitAStar(Vector3 startWorldPos, Vector3 endWorldPos)
     {
+        GraphNode startNode = grid.GetNodeFromWorldPoint(startWorldPos);
         goalNode = grid.GetNodeFromWorldPoint(endWorldPos);
-
+        
+        if (startNode.IsObstacle) return 1;
         if (goalNode.IsObstacle) return 1;
+        
+        // reiniciar listas y todos los nodos del grid
+        // si no se hace esto, los calculos de un frame anterior afectaran al calculo de este frame.
+        toVisit.Clear();
+        visited.Clear();
 
-        // inicializar TO_VISIT y VISITED
-        //toVisit = new List<GraphNode>();
-        //visited = new HashSet<GraphNode>(); // HashSet es más rápido para buscar
-
-        // reiniciar todos los nodos del grid
-        // si no se hace esto, los cálculos de un frame anterior afectarán al cálculo de este frame.
         foreach (var node in grid.Nodes)
         {
             node.GValue = float.MaxValue;
@@ -80,12 +87,16 @@ public class AStarAlgorithm : MonoBehaviour
         }
 
         // configuracion del nodo inicial
-        GraphNode startNode = grid.GetNodeFromWorldPoint(startWorldPos);
         startNode.GValue = 0;
         startNode.HValue = GetHeuristic(startNode, goalNode); // h(n)
-
+        //Debug.Log("AStarAlgorithm: Nodo inicial:");
+        //startNode.PrintNode();
+    
         // startNode es el unico nodo en TO_VISIT inicialmente
         toVisit.Add(startNode);
+        
+        //Debug.Log($"INIT: Reinicio completo. toVisit.Count: {toVisit.Count} | visited.Count: {visited.Count}");
+        //Debug.Log($"INIT: Nodo inicial {startNode.X},{startNode.Y} G={startNode.GValue} H={startNode.HValue}");
 
         return 0;
     }
@@ -102,7 +113,7 @@ public class AStarAlgorithm : MonoBehaviour
             currentNode = currentNode.CameFrom;
         }
 
-        // el camino esta desde goal a start, así que lo invertimos
+        // el camino esta desde goal a start, asi que se invierte
         path.Reverse();
         return path;
     }
