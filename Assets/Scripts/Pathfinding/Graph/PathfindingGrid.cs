@@ -27,7 +27,7 @@ public class PathfindingGrid : MonoBehaviour
     {
         Nodes = new GraphNode[gridWidth, gridHeight];
 
-        // Crear todos los nodos
+        // crear todos los nodos
         for (int x = 0; x < gridWidth; x++)
         {
             for (int y = 0; y < gridHeight; y++)
@@ -38,7 +38,7 @@ public class PathfindingGrid : MonoBehaviour
             }
         }
 
-        // Marcar los obstáculos
+        // marcar los obstaculos
         for (int x = 0; x < gridWidth; x++)
         {
             for (int y = 0; y < gridHeight; y++)
