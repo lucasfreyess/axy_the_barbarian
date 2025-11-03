@@ -8,6 +8,7 @@ public class LevelLoader : MonoBehaviour
     public GameObject gazerEnemyPrefab;
     public GameObject skeletonArcherEnemyPrefab;
     [SerializeField] private GameObject cowardRatEnemyPrefab;
+    [SerializeField] private GameObject hungryZombieEnemyPrefab;
     
     [Header("Wall Prefabs")]
     public GameObject wallPrefab;
@@ -41,7 +42,8 @@ public class LevelLoader : MonoBehaviour
         {
             { "GazerEnemy", gazerEnemyPrefab },
             { "SkeletonArcherEnemy", skeletonArcherEnemyPrefab },
-            { "CowardRatEnemy", cowardRatEnemyPrefab }
+            { "CowardRatEnemy", cowardRatEnemyPrefab },
+            { "HungryZombieEnemy", hungryZombieEnemyPrefab }
         };
     }
     
