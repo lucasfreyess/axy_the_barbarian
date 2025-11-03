@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7127734556895123564}
   - component: {fileID: 7888823049846469234}
   - component: {fileID: 7691014768181890541}
+  - component: {fileID: 2672402636886274592}
+  - component: {fileID: -2117629829584242789}
   m_Layer: 0
   m_Name: HungryZombieEnemy
   m_TagString: Enemy
@@ -188,13 +190,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 483eb8fde370e644787006039ff61307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input_: {fileID: 0}
+  input_: {fileID: 2672402636886274592}
   movement_: {fileID: 0}
-  physics_: {fileID: 0}
+  physics_: {fileID: -2117629829584242789}
   graphics_: {fileID: 0}
   audio_: {fileID: 0}
   startingX: 0
   startingY: 0
-  speed: 4
-  pathRecalculateRate: 0.5
+--- !u!114 &2672402636886274592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362734602823645530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd58cd9594eedda4584666d205fa2da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zombie: {fileID: 7691014768181890541}
+  pathRecalculateRate: 1
+--- !u!114 &-2117629829584242789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362734602823645530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ab44d876e2528e4984313317fb92938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   rb: {fileID: 7888823049846469234}
+  zombie: {fileID: 7691014768181890541}
+  speed: 4
