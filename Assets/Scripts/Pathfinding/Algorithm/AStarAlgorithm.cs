@@ -40,7 +40,8 @@ public class AStarAlgorithm : MonoBehaviour
                 // ignorar vecino si ya esta en VISITED
                 if (visited.Contains(neighbor)) continue;
 
-                float costToNeighbor = 1.0f;
+                //float costToNeighbor = 1.0f;
+                float costToNeighbor = GetHeuristic(currentNode, neighbor);
                 float tentativeGScore = currentNode.GValue + costToNeighbor;
 
                 // ==== If g(s’ ) > g(s) + cost: ====
@@ -71,8 +72,53 @@ public class AStarAlgorithm : MonoBehaviour
         GraphNode startNode = grid.GetNodeFromWorldPoint(startWorldPos);
         goalNode = grid.GetNodeFromWorldPoint(endWorldPos);
         
-        if (startNode.IsObstacle) return 1;
-        if (goalNode.IsObstacle) return 1;
+        //if (startNode.IsObstacle) return 1;
+        //if (goalNode.IsObstacle) return 1;
+
+        // Si el NODO DE INICIO es un obstáculo (el zombie se atascó)
+        if (startNode.IsObstacle)
+        {
+            // Buscar el vecino transitable más cercano
+            GraphNode closestValidStart = null;
+            float minDistance = float.MaxValue;
+            foreach (var neighbor in grid.GetAllNeighbors(startNode)) // Usa la de 8
+            {
+                if (!neighbor.IsObstacle)
+                {
+                    float distance = Vector3.Distance(neighbor.WorldPosition, startWorldPos);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closestValidStart = neighbor;
+                    }
+                }
+            }
+            
+            if (closestValidStart == null) return 1; // 100% Atascado (sin vecinos)
+            startNode = closestValidStart; // ¡Usar este nuevo nodo!
+        }
+
+        // Si el NODO OBJETIVO es un obstáculo (el jugador está en un muro)
+        if (goalNode.IsObstacle)
+        {
+            GraphNode closestValidGoal = null;
+            float minDistance = float.MaxValue;
+            foreach (var neighbor in grid.GetAllNeighbors(goalNode)) // Usa la de 8
+            {
+                if (!neighbor.IsObstacle)
+                {
+                    float distance = Vector3.Distance(neighbor.WorldPosition, endWorldPos);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closestValidGoal = neighbor;
+                    }
+                }
+            }
+            
+            if (closestValidGoal == null) return 1; // Jugador 100% atrapado
+            goalNode = closestValidGoal; // ¡Usar este nuevo nodo! (goalNode es variable de clase)
+        }
         
         // reiniciar listas y todos los nodos del grid
         // si no se hace esto, los calculos de un frame anterior afectaran al calculo de este frame.

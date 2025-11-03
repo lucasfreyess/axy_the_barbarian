@@ -17,6 +17,7 @@ public class PathfindingGrid : MonoBehaviour
 
     // para detectar si un GameObject es un obstaculo
     [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private Vector2 agentSize = new Vector2(0.16f, 0.16f);
 
     void Start()
     {
@@ -46,7 +47,9 @@ public class PathfindingGrid : MonoBehaviour
                 GraphNode node = Nodes[x, y];
 
                 // Revisar si hay collider de obstaculo en la pos de este nodo
-                if (Physics2D.OverlapPoint(node.WorldPosition, obstacleLayer))
+                //if (Physics2D.OverlapCircle(node.WorldPosition, agentRadius, obstacleLayer))
+                //if (Physics2D.OverlapPoint(node.WorldPosition, obstacleLayer))
+                if (Physics2D.OverlapBox(node.WorldPosition, agentSize * 20f, 0f, obstacleLayer)) // 20f es necesario para que no se quede atascado en paredes
                 {
                     //Debug.Log($"Obstaculo en nodo ({node.X}, {node.Y}) Pos Real: {node.WorldPosition}");
                     node.IsObstacle = true;

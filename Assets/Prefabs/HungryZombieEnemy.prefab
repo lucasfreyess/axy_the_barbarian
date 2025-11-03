@@ -195,6 +195,6 @@ MonoBehaviour:
   audio_: {fileID: 0}
   startingX: 0
   startingY: 0
-  moveSpeed: 1.5
-  pathRecalculateRate: 1
+  speed: 4
+  pathRecalculateRate: 0.5
   rb: {fileID: 7888823049846469234}

@@ -68,19 +68,19 @@ public class HungryZombieController : GameEntity
             
             // se apunta al segundo nodo del camino (indice 1), porque el primero (indice 0) es donde ya esta el zombie.
             currentPathIndex = 1;
-            //Debug.Log($"HungryZombie obtuvo un camino con {currentPath.Count} nodos. Apuntando al indice 1.");
+            Debug.Log($"HungryZombie obtuvo un camino con {currentPath.Count} nodos. Apuntando al indice 1.");
         }
         else if (currentPath != null && currentPath.Count == 1) // El camino solo tiene 1 nodo
         {
             // ya se esta en el nodo final, por lo que se apunta al 0 (zombie) y no se sigue moviendo.
             currentPathIndex = 0;
-            //Debug.Log("HungryZombie obtuvo camino de 1 nodo (se llego al destino).");
+            Debug.Log("HungryZombie obtuvo camino de 1 nodo (se llego al destino).");
         }
         else // no se encontro un camino.
         {
             currentPath = new List<GraphNode>();
             currentPathIndex = 0;
-            //Debug.Log("HungryZombie obtuvo un camino con 0 nodos.");
+            Debug.Log("HungryZombie obtuvo un camino con 0 nodos.");
         }
     }
 
@@ -115,9 +115,16 @@ public class HungryZombieController : GameEntity
         Vector2 direction = (targetPosition - transform.position).normalized;
         rb.linearVelocity = direction * speed;
 
+        
+        //Debug.Log($"Moviendo a waypoint {currentPathIndex} en {targetPosition}. " +
+                  //$"Distancia restante: {Vector3.Distance(transform.position, targetPosition)}");
+
         // revisar si se llego al nodo n
             // si se esta lo suficientemente cerca, se avanza al siguiente nodo
         if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
+        {
+            //Debug.LogWarning($"¡¡LLEGUÉ AL WAYPOINT {currentPathIndex}!! Avanzando al siguiente.");
             currentPathIndex++;
+        } 
     }
 }

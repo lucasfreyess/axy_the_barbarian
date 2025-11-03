@@ -18,6 +18,16 @@
 
     { "posX": 60, "posY": 15, "rotation": 90, "scaleY": 1 },
     { "posX": 60, "posY": -15, "rotation": 90, "scaleY": 1 },
+
+    { "posX": 80, "posY": 2, "rotation": 0, "scaleY": 1 },
+    { "posX": 63, "posY": -9, "rotation": 90, "scaleY": 1.75 },
+    { "posX": 63, "posY": 12, "rotation": 90, "scaleY": 1.75 },
+    { "posX": 73, "posY": -1.4, "rotation": 0, "scaleY": 0.7 },
+    { "posX": 65, "posY": 4.4, "rotation": 0, "scaleY": 0.7 },
+    { "posX": 58, "posY": -1.4, "rotation": 0, "scaleY": 0.7 },
+    { "posX": 51, "posY": 4.4, "rotation": 0, "scaleY": 0.7 },
+
+
     
     { "posX": 84, "posY": 0, "rotation": 0, "scaleY": 0.7 },
     { "posX": 87, "posY": 7, "rotation": 90, "scaleY": 0.3 },
@@ -28,7 +38,7 @@
     { "posX": 90, "posY": -31.5, "rotation": 0, "scaleY": 1 }
   ],
   "enemies": [
-    { "type": "HungryZombieEnemy", "startingX": 60, "startingY": 0 },
+    { "type": "HungryZombieEnemy", "startingX": 77, "startingY": -6 },
     { "type": "GazerEnemy", "startingX": 81, "startingY": -12 }
   ],
   "exitWall": { "posX": 90, "posY": 0, "rotation": 0, "scaleY": 0.7 }
