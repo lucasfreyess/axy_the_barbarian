@@ -71,55 +71,24 @@ public class AStarAlgorithm : MonoBehaviour
     {
         GraphNode startNode = grid.GetNodeFromWorldPoint(startWorldPos);
         goalNode = grid.GetNodeFromWorldPoint(endWorldPos);
-        
-        //if (startNode.IsObstacle) return 1;
-        //if (goalNode.IsObstacle) return 1;
 
-        // Si el NODO DE INICIO es un obstáculo (el zombie se atascó)
+        // si startNode es un obstaculo (e.g., el zombie se atasco)
         if (startNode.IsObstacle)
         {
-            // Buscar el vecino transitable más cercano
-            GraphNode closestValidStart = null;
-            float minDistance = float.MaxValue;
-            foreach (var neighbor in grid.GetAllNeighbors(startNode)) // Usa la de 8
-            {
-                if (!neighbor.IsObstacle)
-                {
-                    float distance = Vector3.Distance(neighbor.WorldPosition, startWorldPos);
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        closestValidStart = neighbor;
-                    }
-                }
-            }
-            
-            if (closestValidStart == null) return 1; // 100% Atascado (sin vecinos)
-            startNode = closestValidStart; // ¡Usar este nuevo nodo!
+            // Buscar el vecino transitable mas cercano
+            GraphNode closestValidStart = FindClosestTransitableToNode(startNode, startWorldPos);
+            if (closestValidStart == null) return 1;
+            startNode = closestValidStart;
         }
 
-        // Si el NODO OBJETIVO es un obstáculo (el jugador está en un muro)
+        // si endNode es un obstaculo (e.g., el jugador esta en un muro)
         if (goalNode.IsObstacle)
         {
-            GraphNode closestValidGoal = null;
-            float minDistance = float.MaxValue;
-            foreach (var neighbor in grid.GetAllNeighbors(goalNode)) // Usa la de 8
-            {
-                if (!neighbor.IsObstacle)
-                {
-                    float distance = Vector3.Distance(neighbor.WorldPosition, endWorldPos);
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        closestValidGoal = neighbor;
-                    }
-                }
-            }
-            
-            if (closestValidGoal == null) return 1; // Jugador 100% atrapado
-            goalNode = closestValidGoal; // ¡Usar este nuevo nodo! (goalNode es variable de clase)
+            GraphNode closestValidGoal = FindClosestTransitableToNode(goalNode, endWorldPos);
+            if (closestValidGoal == null) return 1; // entonces jugador esta atrapado
+            goalNode = closestValidGoal;
         }
-        
+
         // reiniciar listas y todos los nodos del grid
         // si no se hace esto, los calculos de un frame anterior afectaran al calculo de este frame.
         toVisit.Clear();
@@ -182,5 +151,29 @@ public class AStarAlgorithm : MonoBehaviour
             }
         }
         return lowestFNode;
+    }
+
+    // metodo de utilidad para encontrar el vecino transitable mas cercano a una "muralla"
+    // ya que una muralla se extiende dos nodos "radialmente", entonces existen nodos en los que no hay muralla que son marcados de la manera opuesta
+    // entonces es necesario saber si el jugador o el enemigo se encuentra en alguno de dichos nodos, y retornar la celda transitable mas cercana
+    private GraphNode FindClosestTransitableToNode(GraphNode referenceNode, Vector3 referenceNodeWorldPos)
+    {
+        GraphNode closestValidStart = null;
+        float minDistance = float.MaxValue;
+        foreach (var neighbor in grid.GetAllNeighbors(referenceNode)) // referenceNode tiende a ser start o goalNode
+        {
+            if (!neighbor.IsObstacle)
+            {
+                float distance = Vector3.Distance(neighbor.WorldPosition, referenceNodeWorldPos);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestValidStart = neighbor;
+                }
+            }
+        }
+
+        if (closestValidStart == null) return null; // 100% Atascado (sin vecinos)
+        return closestValidStart;
     }
 }

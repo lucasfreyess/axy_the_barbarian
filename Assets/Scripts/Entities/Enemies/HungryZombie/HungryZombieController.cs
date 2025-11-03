@@ -115,12 +115,11 @@ public class HungryZombieController : GameEntity
         Vector2 direction = (targetPosition - transform.position).normalized;
         rb.linearVelocity = direction * speed;
 
-        
         //Debug.Log($"Moviendo a waypoint {currentPathIndex} en {targetPosition}. " +
-                  //$"Distancia restante: {Vector3.Distance(transform.position, targetPosition)}");
+        //$"Distancia restante: {Vector3.Distance(transform.position, targetPosition)}");
 
         // revisar si se llego al nodo n
-            // si se esta lo suficientemente cerca, se avanza al siguiente nodo
+        // si se esta lo suficientemente cerca, se avanza al siguiente nodo
         if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
         {
             //Debug.LogWarning($"¡¡LLEGUÉ AL WAYPOINT {currentPathIndex}!! Avanzando al siguiente.");
