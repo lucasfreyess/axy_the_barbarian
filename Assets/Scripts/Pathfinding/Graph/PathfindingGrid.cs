@@ -73,7 +73,7 @@ public class PathfindingGrid : MonoBehaviour
         }
     }
 
-    // =================== Metodos ======================
+    // ===== metodos getters en su mayoria =====
 
     // obtener un nodo desde coordenadas del grid
     public GraphNode GetNode(int x, int y)
