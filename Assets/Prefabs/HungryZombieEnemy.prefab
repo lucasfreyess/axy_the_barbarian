@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1186917055923105509
+--- !u!1 &2362734602823645530
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,28 +8,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1057272464436109597}
-  - component: {fileID: 4547672578535511069}
-  - component: {fileID: 8780498557273555461}
-  - component: {fileID: 7708214533915799865}
-  - component: {fileID: 8628104456807171410}
-  - component: {fileID: 1336922744662297462}
-  - component: {fileID: 4171801876862184335}
-  - component: {fileID: 5836118460410288259}
-  m_Layer: 6
-  m_Name: SkeletonArcherEnemy
+  - component: {fileID: 4789186645050659296}
+  - component: {fileID: 6162302103191261086}
+  - component: {fileID: 7279144690613780438}
+  - component: {fileID: 7127734556895123564}
+  - component: {fileID: 7888823049846469234}
+  - component: {fileID: 7691014768181890541}
+  - component: {fileID: 2672402636886274592}
+  - component: {fileID: -2117629829584242789}
+  m_Layer: 0
+  m_Name: HungryZombieEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1057272464436109597
+--- !u!224 &4789186645050659296
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
@@ -39,24 +39,24 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8, y: 0}
+  m_AnchoredPosition: {x: 29.15816, y: -7.11725}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4547672578535511069
+--- !u!222 &6162302103191261086
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_CullTransparentMesh: 1
---- !u!212 &8780498557273555461
+--- !u!212 &7279144690613780438
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -95,7 +95,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.23018861, g: 0.21151292, b: 0.21151292, a: 1}
+  m_Color: {r: 0, g: 0.6981132, b: 0.14810711, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,13 +105,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &7708214533915799865
+--- !u!61 &7127734556895123564
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -151,64 +151,78 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
---- !u!114 &8628104456807171410
+--- !u!50 &7888823049846469234
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2362734602823645530}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!114 &7691014768181890541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f698dcac6c767034786e3052437bb4b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 483eb8fde370e644787006039ff61307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input_: {fileID: 0}
-  movement_: {fileID: 1336922744662297462}
-  physics_: {fileID: 0}
+  input_: {fileID: 2672402636886274592}
+  movement_: {fileID: 0}
+  physics_: {fileID: -2117629829584242789}
   graphics_: {fileID: 0}
   audio_: {fileID: 0}
-  startingX: 8
+  startingX: 0
   startingY: 0
-  shooting: {fileID: 4171801876862184335}
-  timing: {fileID: 5836118460410288259}
---- !u!114 &1336922744662297462
+--- !u!114 &2672402636886274592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78f21dbb2bd5f6b4e87ef07040a559dc, type: 3}
+  m_Script: {fileID: 11500000, guid: bd58cd9594eedda4584666d205fa2da8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeleton: {fileID: 8628104456807171410}
---- !u!114 &4171801876862184335
+  zombie: {fileID: 7691014768181890541}
+  pathRecalculateRate: 1
+--- !u!114 &-2117629829584242789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
+  m_GameObject: {fileID: 2362734602823645530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e32aaaaa003c4459bd5f003ca7c58d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ab44d876e2528e4984313317fb92938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 7460438627956868959, guid: 2927b25802ec3074abbbf74a6b589eca, type: 3}
-  arrowAreaRadius: 5
---- !u!114 &5836118460410288259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186917055923105509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c22ab3765f4214c900f1b86560637e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 1
+  rb: {fileID: 7888823049846469234}
+  zombie: {fileID: 7691014768181890541}
+  speed: 4

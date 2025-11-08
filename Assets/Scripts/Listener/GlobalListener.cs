@@ -7,10 +7,11 @@ public class GlobalListener : MonoBehaviour
 {
     public static GlobalListener Instance { get; private set; } // getter es publico, setter es privado
 
-    // eventos globales (por ahora solo maneja eventos de colision y win/lose)
+    // eventos globales
     public event Action OnPlayerCollisionGlobal;  //para que el soundcomponent pueda reproducir sonido!
     public event Action OnGameWonGlobal;          //para imprimir texto de victoria/derrota en UI/TextWriter.cs
     public event Action OnGameLostGlobal;
+    public event Action OnLevelsGenerated;
 
     private void Awake()
     {
@@ -40,5 +41,10 @@ public class GlobalListener : MonoBehaviour
     public void NotifyGameLost()
     {
         OnGameLostGlobal?.Invoke();
+    }
+
+    public void NotifyLevelsGenerated()
+    {
+        OnLevelsGenerated?.Invoke();
     }
 }

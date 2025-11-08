@@ -21,7 +21,7 @@ public class SkeletonTimingComponent : MonoBehaviour
         // checkear si el timer excedio el intervalo de disparos de flechas!
         if (shootIntervalTimer < shootInterval) return;
 
-        Debug.Log("Timer excedio el intervalo!");
+        //Debug.Log("Timer excedio el intervalo!");
         shootIntervalTimer = 0f; // reiniciar el timer
         OnShootReady?.Invoke();
     }

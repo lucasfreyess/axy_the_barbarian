@@ -4,25 +4,48 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
-    [Header("Prefabs")]
-    public GameObject wallPrefab;
+    [Header("Enemy Prefabs")]
     public GameObject gazerEnemyPrefab;
-    public GameObject skeletonArcherPrefab;
+    public GameObject skeletonArcherEnemyPrefab;
+    [SerializeField] private GameObject cowardRatEnemyPrefab;
+    [SerializeField] private GameObject hungryZombieEnemyPrefab;
+    
+    [Header("Wall Prefabs")]
+    public GameObject wallPrefab;
     public GameObject exitWallPrefab;
 
     [Header("Level Stuff")]
     public string levelFileName = "Level01";
     public bool loadAllLevels = true; // si se pone true, se loadean todos los json dentro de Assets/Resources/Levels
 
-    private const float WALL_X_SIZE = 0.9412677f;
-    private const float WALL_Y_SIZE = 19.27043f;
+    //private const float WALL_X_SIZE = 0.9412677f;
+    //private const float WALL_Y_SIZE = 19.27043f;
 
     private LevelData level;
+    private Dictionary<string, GameObject> enemyDictionary;
 
     private void Start()
     {
+        // inicializar diccionario de enemigos para fetchear facilmente en GenerateEnemies()
+        InitEnemyDictionary();
+
+        // cargar niveles
         if (loadAllLevels) LoadAllLevels();
         else LoadLevel(levelFileName);
+
+        Physics2D.SyncTransforms(); // para que las murallas con scaleY != 1 sean populadas correctamente en el grid de pathfinding
+        GlobalListener.Instance.NotifyLevelsGenerated();
+    }
+
+    private void InitEnemyDictionary()
+    {
+        enemyDictionary = new Dictionary<string, GameObject>
+        {
+            { "GazerEnemy", gazerEnemyPrefab },
+            { "SkeletonArcherEnemy", skeletonArcherEnemyPrefab },
+            { "CowardRatEnemy", cowardRatEnemyPrefab },
+            { "HungryZombieEnemy", hungryZombieEnemyPrefab }
+        };
     }
     
     private void LoadAllLevels()
@@ -62,7 +85,7 @@ public class LevelLoader : MonoBehaviour
         TextAsset jsonFile = Resources.Load<TextAsset>($"Levels/{fileName}");
         if (jsonFile == null)
         {
-            Debug.LogError("No se encontró el archivo JSON del nivel: " + fileName);
+            Debug.LogError("No se encontro el archivo JSON del nivel: " + fileName);
             return;
         }
 
@@ -94,17 +117,19 @@ public class LevelLoader : MonoBehaviour
 
     private void GenerateEnemies()
     {
+        if (enemyDictionary == null)
+        {
+            Debug.LogError("Diccionario de enemigos no fue inicializado!!!!");
+            return;
+        }
+
         foreach (var enemy in level.enemies)
         {
-            GameObject prefab = null;
-            if (enemy.type == "GazerEnemy") prefab = gazerEnemyPrefab;
-            else if (enemy.type == "SkeletonArcherEnemy") prefab = skeletonArcherPrefab;
+            GameObject enemyPrefab = enemyDictionary[enemy.type];
 
-            if (prefab != null)
-            {
-                GameObjectFactory.CreateEnemy(prefab, enemy.startingX, enemy.startingY);
-            }
+            if (enemyPrefab == null) return;
+            
+            GameObjectFactory.CreateEnemy(enemyPrefab, enemy.startingX, enemy.startingY);
         }
     }
-    
 }

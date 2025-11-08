@@ -9,6 +9,8 @@ public class AudioComponent : MonoBehaviour
     
     public virtual void PlaySound()
     {
-        if (audioSource != null) audioSource.Play();
+        if (audioSource != null) return;
+        
+        audioSource.Play();
     }
 }
