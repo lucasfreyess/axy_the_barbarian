@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 
@@ -13,16 +14,27 @@ public class CowardRatInputComponent : InputComponent
 
     [Header("Flee-Propiedades")]
     [SerializeField] private float fleeSpeed = 25f;                  // v (magnitud de velocidad) en flee
-    [SerializeField] private float fleeDistanceRadius = 5f;          // distancia, respecto al jugador, en la que la rata comienza a flee-ear
+    public float fleeDistanceRadius = 5f;                            // distancia, respecto al jugador, en la que la rata comienza a flee-ear (o a seek-ear si es de noche!!)
     
-    private Transform playerTransform;
-    private bool isFleeing; // para saber que velocidad aplicar en ProcessTargetVelocity()
+    [Header("Attack-Propiedades")]
+    [SerializeField] private float attackSpeed = 15f;                // v (magnitud de velocidad) en attack
+    
+    public Transform playerTransform;
+    private float currentSpeed; // va cambiando entre wanderSpeed, fleeSpeed y attackSpeed !!!
+
+    // decision-tree cosas
+    private ObjectDecisionNode rootNode; // nodo inicial de Decision Tree de la rata
+    private const string WANDER_ACTION_NAME = "Wander";
+    private const string FLEE_ACTION_NAME = "Flee";
+    private const string ATTACK_ACTION_NAME = "Attack";
 
 
     public override void Start()
     {
         base.Start();
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        InitializeDecisionTree();
     }
 
     public override void ProcessInput()
@@ -35,14 +47,32 @@ public class CowardRatInputComponent : InputComponent
 
     private void ProcessTargetMoveDirection()
     {
-        float distanceToPlayer = Vector2.Distance(playerTransform.position, this.transform.position);
         Vector2 targetMoveDirection; // Df
 
-        // si jugador esta dentro del radio de flee de la rata, se flee-ea; e.o.c. (idly), se wander-ea
-        if (distanceToPlayer <= fleeDistanceRadius)
-            targetMoveDirection = ProcessFleeMovement();
-        else
-            targetMoveDirection = ProcessWanderMovement();
+        /*========================== COMIENZO DECISION MAKING =========================*/
+
+        ActionNode resultNode = (ActionNode) rootNode.Decide(this.gameObject, new GameObject());
+
+        switch (resultNode.name)
+        {
+            case WANDER_ACTION_NAME:
+                targetMoveDirection = ProcessWanderMovement();
+                break;
+
+            case FLEE_ACTION_NAME:
+                targetMoveDirection = ProcessFleeMovement();
+                break;
+
+            case ATTACK_ACTION_NAME:
+                targetMoveDirection = ProcessAttackMovement();
+                break;
+
+            default:
+                targetMoveDirection = ProcessWanderMovement();
+                break;
+        }
+
+        /*========================== FIN DE DECISION MAKING =========================*/
 
         rat.SetMoveDirection(targetMoveDirection);
     }
@@ -53,8 +83,20 @@ public class CowardRatInputComponent : InputComponent
         Vector2 actualPosition = this.transform.position;
         Vector2 targetPosition = playerTransform.position;
 
-        isFleeing = true;
+        currentSpeed = fleeSpeed;
         return -(targetPosition - actualPosition).normalized; // Df = -N(Pf-Pi)
+    }
+
+    private Vector2 ProcessAttackMovement()
+    {
+        // copy-paste de ProcessFleeMovement; simplemente hace seek xd
+
+        // asigno las siguientes variables para que quede claro cual es Pf (targetPosition) y cual es Pi (actualPosition)
+        Vector2 actualPosition = this.transform.position;
+        Vector2 targetPosition = playerTransform.position;
+
+        currentSpeed = attackSpeed;
+        return (targetPosition - actualPosition).normalized; // Df = N(Pf-Pi) (seek)
     }
 
     private Vector2 ProcessWanderMovement()
@@ -65,15 +107,39 @@ public class CowardRatInputComponent : InputComponent
             Random.Range(-wanderAngleVariationRange, wanderAngleVariationRange)
         );
 
-        isFleeing = false;
+        currentSpeed = wanderSpeed;
         return (rat.GetMoveDirection() + randomAngleVariation).normalized; // Df = Di + small_random_delta  
     }
 
     private void ProcessTargetVelocity()
     {
         Vector2 moveDirection = rat.GetMoveDirection(); // Df (targetDirection)
-        float currentSpeed = isFleeing ? fleeSpeed : wanderSpeed;
-
         rat.SetMoveVelocity(currentSpeed * moveDirection); // Vf = v * Df
+    }
+
+    private void InitializeDecisionTree()
+    {
+        // evaluadores
+        isPlayerInsideRadiusEvaluator radiusEvaluator = new isPlayerInsideRadiusEvaluator();
+
+        // decisiones
+        ObjectDecisionNode isPlayerInsideRadius = new ObjectDecisionNode(radiusEvaluator); // objectDecisionNode hace radiusEvaluator.Evaluate dentro de si
+        //BoolDecisionNode isItNight = new BoolDecisionNode();
+
+        // acciones
+        ActionNode wanderAction = new ActionNode(WANDER_ACTION_NAME);
+        ActionNode fleeAction = new ActionNode(FLEE_ACTION_NAME);
+        ActionNode attackAction = new ActionNode(ATTACK_ACTION_NAME);
+
+        // construir el arbol!!!
+        isPlayerInsideRadius.NoNode = wanderAction;
+        isPlayerInsideRadius.YesNode = fleeAction;
+        //isPlayerInsideRadius.YesNode = isItNight;
+
+        //isItNight.NoNode = fleeAction;
+        //isItNight.YesNode = attackAction;
+
+        // definir root
+        rootNode = isPlayerInsideRadius;
     }
 }
