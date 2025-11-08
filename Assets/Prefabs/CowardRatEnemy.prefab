@@ -211,9 +211,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rat: {fileID: 2395814020430152820}
   wanderSpeed: 5
-  fleeSpeed: 25
-  fleeDistanceRadius: 5
   wanderAngleVariationRange: 0.1
+  fleeSpeed: 25
+  fleeDistanceRadius: 10
+  attackSpeed: 10
+  playerTransform: {fileID: 0}
 --- !u!114 &930525761037930930
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 
 
@@ -14,13 +13,14 @@ public class CowardRatInputComponent : InputComponent
 
     [Header("Flee-Propiedades")]
     [SerializeField] private float fleeSpeed = 25f;                  // v (magnitud de velocidad) en flee
-    public float fleeDistanceRadius = 5f;                            // distancia, respecto al jugador, en la que la rata comienza a flee-ear (o a seek-ear si es de noche!!)
+    public float fleeDistanceRadius = 10f;                           // distancia, respecto al jugador, en la que la rata comienza a flee-ear (o a seek-ear si es de noche!!)
     
     [Header("Attack-Propiedades")]
-    [SerializeField] private float attackSpeed = 15f;                // v (magnitud de velocidad) en attack
-    
+    [SerializeField] private float attackSpeed = 10f;                // v (magnitud de velocidad) en attack
+
     public Transform playerTransform;
-    private float currentSpeed; // va cambiando entre wanderSpeed, fleeSpeed y attackSpeed !!!
+    private GameObject lightingManagerObject; // para obtener isItNight
+    private float currentSpeed;               // va cambiando entre wanderSpeed, fleeSpeed y attackSpeed !!!
 
     // decision-tree cosas
     private ObjectDecisionNode rootNode; // nodo inicial de Decision Tree de la rata
@@ -33,7 +33,13 @@ public class CowardRatInputComponent : InputComponent
     {
         base.Start();
 
+        // obtener transform del jugador
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        // obtener objeto que posee el script de dayNightCycle
+        lightingManagerObject = GameObject.Find("LightingManagerObject");
+        if (lightingManagerObject == null) Debug.LogWarning("GameObject 'LightingManagerObject' no fue encontrado");
+        
         InitializeDecisionTree();
     }
 
@@ -47,34 +53,10 @@ public class CowardRatInputComponent : InputComponent
 
     private void ProcessTargetMoveDirection()
     {
-        Vector2 targetMoveDirection; // Df
+        // Decision Making mediante el Decision Tree!!
+        Vector2 targetMoveDirection = EvaluateDecisionTree();
 
-        /*========================== COMIENZO DE DECISION MAKING =========================*/
-
-        // rata no toma decisiones segun el mundo (aparte del jugador) todavia
-        ActionNode resultNode = (ActionNode) rootNode.Decide(this.gameObject, new GameObject());
-
-        switch (resultNode.name)
-        {
-            case WANDER_ACTION_NAME:
-                targetMoveDirection = ProcessWanderMovement();
-                break;
-
-            case FLEE_ACTION_NAME:
-                targetMoveDirection = ProcessFleeMovement();
-                break;
-
-            case ATTACK_ACTION_NAME:
-                targetMoveDirection = ProcessAttackMovement();
-                break;
-
-            default:
-                targetMoveDirection = ProcessWanderMovement();
-                break;
-        }
-
-        /*========================== FIN DE DECISION MAKING =========================*/
-
+        // setear orientacion segun output de decision making
         rat.SetMoveDirection(targetMoveDirection);
     }
 
@@ -122,10 +104,11 @@ public class CowardRatInputComponent : InputComponent
     {
         // evaluadores
         IsPlayerInsideRadiusEvaluator radiusEvaluator = new IsPlayerInsideRadiusEvaluator();
+        IsItNightEvaluator nightEvaluator = new IsItNightEvaluator();
 
         // decisiones
         ObjectDecisionNode isPlayerInsideRadius = new ObjectDecisionNode(radiusEvaluator); // objectDecisionNode hace radiusEvaluator.Evaluate dentro de si
-        //BoolDecisionNode isItNight = new BoolDecisionNode();
+        ObjectDecisionNode isItNight = new ObjectDecisionNode(nightEvaluator);
 
         // acciones
         ActionNode wanderAction = new ActionNode(WANDER_ACTION_NAME);
@@ -134,13 +117,41 @@ public class CowardRatInputComponent : InputComponent
 
         // construir el arbol!!!
         isPlayerInsideRadius.NoNode = wanderAction;
-        isPlayerInsideRadius.YesNode = fleeAction;
-        //isPlayerInsideRadius.YesNode = isItNight;
+        isPlayerInsideRadius.YesNode = isItNight;
 
-        //isItNight.NoNode = fleeAction;
-        //isItNight.YesNode = attackAction;
+        isItNight.NoNode = fleeAction;
+        isItNight.YesNode = attackAction;
 
         // definir root
         rootNode = isPlayerInsideRadius;
+    }
+
+    // metodo para hacer decision making xd
+    private Vector2 EvaluateDecisionTree()
+    {
+        // rata no toma decisiones segun el mundo (aparte del jugador) todavia
+        ActionNode resultNode = (ActionNode)rootNode.Decide(this.gameObject, lightingManagerObject);
+        Vector2 targetMoveDirection; // Df
+
+        switch (resultNode.name)
+        {
+            case WANDER_ACTION_NAME:
+                targetMoveDirection = ProcessWanderMovement();
+                break;
+
+            case FLEE_ACTION_NAME:
+                targetMoveDirection = ProcessFleeMovement();
+                break;
+
+            case ATTACK_ACTION_NAME:
+                targetMoveDirection = ProcessAttackMovement();
+                break;
+
+            default:
+                targetMoveDirection = ProcessWanderMovement();
+                break;
+        }
+
+        return targetMoveDirection;
     }
 }
