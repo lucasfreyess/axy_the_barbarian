@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class isPlayerInsideRadiusEvaluator : BehaviorEvaluator
+public class IsPlayerInsideRadiusEvaluator : BehaviorEvaluator
 {
     // evaluador para saber si el jugador se encuentra dentro del fleeDistanceRadius (actualmente igual a 5f) de la rata
 
@@ -13,12 +13,14 @@ public class isPlayerInsideRadiusEvaluator : BehaviorEvaluator
         //else
         //    targetMoveDirection = ProcessWanderMovement();
 
+        // get-eo de propiedades de rata y jugador
         CowardRatInputComponent ratInputComponent = obj.GetComponent<CowardRatInputComponent>();
         float fleeOrAttackRadius = ratInputComponent.fleeDistanceRadius;
 
         Transform playerTransform = ratInputComponent.playerTransform;
         float distanceToPlayer = Vector2.Distance(playerTransform.position, obj.transform.position);
 
+        // evaluacion xd
         if (distanceToPlayer <= fleeOrAttackRadius) return true;
         else return false;
     }

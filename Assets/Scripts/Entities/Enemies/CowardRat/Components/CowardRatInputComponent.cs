@@ -49,8 +49,9 @@ public class CowardRatInputComponent : InputComponent
     {
         Vector2 targetMoveDirection; // Df
 
-        /*========================== COMIENZO DECISION MAKING =========================*/
+        /*========================== COMIENZO DE DECISION MAKING =========================*/
 
+        // rata no toma decisiones segun el mundo (aparte del jugador) todavia
         ActionNode resultNode = (ActionNode) rootNode.Decide(this.gameObject, new GameObject());
 
         switch (resultNode.name)
@@ -113,14 +114,14 @@ public class CowardRatInputComponent : InputComponent
 
     private void ProcessTargetVelocity()
     {
-        Vector2 moveDirection = rat.GetMoveDirection(); // Df (targetDirection)
+        Vector2 moveDirection = rat.GetMoveDirection();    // Df (targetDirection)
         rat.SetMoveVelocity(currentSpeed * moveDirection); // Vf = v * Df
     }
 
     private void InitializeDecisionTree()
     {
         // evaluadores
-        isPlayerInsideRadiusEvaluator radiusEvaluator = new isPlayerInsideRadiusEvaluator();
+        IsPlayerInsideRadiusEvaluator radiusEvaluator = new IsPlayerInsideRadiusEvaluator();
 
         // decisiones
         ObjectDecisionNode isPlayerInsideRadius = new ObjectDecisionNode(radiusEvaluator); // objectDecisionNode hace radiusEvaluator.Evaluate dentro de si
