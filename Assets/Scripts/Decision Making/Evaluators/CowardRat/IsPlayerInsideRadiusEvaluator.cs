@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class IsPlayerInsideRadiusEvaluator : BehaviorEvaluator
 {
     // evaluador para saber si el jugador se encuentra dentro del fleeDistanceRadius (actualmente igual a 5f) de la rata
