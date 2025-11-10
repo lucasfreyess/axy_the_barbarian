@@ -846,7 +846,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleDurationInSeconds: 10
-  camera: {fileID: 330585545}
   dayColor: {r: 1, g: 1, b: 1, a: 1}
   nightColor: {r: 0, g: 0, b: 0, a: 1}
   isItNight: 0

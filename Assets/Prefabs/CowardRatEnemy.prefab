@@ -210,11 +210,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rat: {fileID: 2395814020430152820}
+  fleeOrAttackRadius: 10
   wanderSpeed: 5
   wanderAngleVariationRange: 0.1
   fleeSpeed: 25
-  fleeDistanceRadius: 10
   attackSpeed: 10
+  shouldAvoidObstacles: 1
+  avoidanceRayLength: 5
+  avoidanceForce: 2
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
   playerTransform: {fileID: 0}
 --- !u!114 &930525761037930930
 MonoBehaviour:

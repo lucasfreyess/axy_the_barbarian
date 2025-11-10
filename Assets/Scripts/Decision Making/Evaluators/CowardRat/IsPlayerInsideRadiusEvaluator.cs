@@ -16,12 +16,12 @@ public class IsPlayerInsideRadiusEvaluator : BehaviorEvaluator
 
         // get-eo de propiedades de rata y jugador
         CowardRatInputComponent ratInputComponent = obj.GetComponent<CowardRatInputComponent>();
-        float fleeOrAttackRadius = ratInputComponent.fleeDistanceRadius;
+        float fleeOrAttackRadius = ratInputComponent.fleeOrAttackRadius;
 
         Transform playerTransform = ratInputComponent.playerTransform;
         float distanceToPlayer = Vector2.Distance(playerTransform.position, obj.transform.position);
 
-        // evaluacion xd
+        // evaluacion; si jugador esta dentro del radio, se flee-ea o ataca; e.o.c. (idly), se wander-ea
         if (distanceToPlayer <= fleeOrAttackRadius) return true;
         else return false;
     }
