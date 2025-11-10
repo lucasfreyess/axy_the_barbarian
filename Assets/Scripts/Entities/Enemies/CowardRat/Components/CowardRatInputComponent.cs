@@ -165,22 +165,19 @@ public class CowardRatInputComponent : InputComponent
     
     private Vector2 ApplyObstacleAvoidance(Vector2 currentDirection)
     {
-        Vector2 origin = transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(origin, currentDirection, avoidanceRayLength, obstacleLayer);
+        // se dibuja el rayo laser
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, currentDirection, avoidanceRayLength, obstacleLayer);
 
         if (hit.collider == null) return currentDirection;
-
-        // Dibujar para depuración (línea roja)
-        Debug.DrawLine(origin, hit.point, Color.red);
 
         // calcular dirección perpendicular a la dirección actual
         Vector2 perpendicularDirection = Vector2.Perpendicular(currentDirection).normalized;
 
-        // Elegir el lado que se aleja más del obstáculo
+        // elegir el lado que se aleja más del obstáculo
         if (Vector2.Dot(perpendicularDirection, hit.normal) < 0) 
             perpendicularDirection = -perpendicularDirection;
 
-        // Combinar dirección original + dirección de evasión
+        // se combina la direccion original con la direccion nueva y se normaliza
         Vector2 avoidanceDirection = (currentDirection + perpendicularDirection * avoidanceForce).normalized;
 
         return avoidanceDirection;
